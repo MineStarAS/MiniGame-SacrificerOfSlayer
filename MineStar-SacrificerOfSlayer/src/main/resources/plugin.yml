@@ -1,0 +1,7 @@
+name: ${project.name}
+version: ${project.version}
+main: kr.kro.minestar.sacrificer.of.slayer.Main
+api-version: 1.18
+authors: [ MineStar ]
+commands:
+  sos:

@@ -34,9 +34,11 @@ subprojects {
         compileOnly("net.kyori:adventure-api:4.10.1")
         compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 
-        //project_TL
-
         //MineStar
         implementation("kr.kro.minestar:Utility-API:1.0.7")
+        //other
+        implementation("org.reflections:reflections:0.10.2")
+        // https://mvnrepository.com/artifact/commons-io/commons-io
+        implementation("commons-io:commons-io:2.11.0")
     }
 }

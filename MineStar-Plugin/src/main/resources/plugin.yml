@@ -1,7 +1,0 @@
-name: ${project.name}
-version: ${project.version}
-main: Main
-api-version: 1.18
-authors: [ MineStar ]
-commands:
-  cmd:
