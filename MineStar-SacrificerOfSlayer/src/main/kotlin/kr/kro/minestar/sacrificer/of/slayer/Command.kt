@@ -8,7 +8,6 @@ import kr.kro.minestar.utility.command.Argument
 import kr.kro.minestar.utility.command.FunctionalCommand
 import kr.kro.minestar.utility.string.removeUnderBar
 import kr.kro.minestar.utility.string.toPlayer
-import kr.kro.minestar.utility.unit.setFalse
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.command.Command
@@ -23,6 +22,7 @@ object Command : FunctionalCommand {
     private enum class OpArg(override val howToUse: String) : Argument {
         creature("[slayer/sacrificer] {CreatureName} {PlayerName}"),
         world("[create/open/save] <WorldName>"),
+        start("<WorldName>"),
         test(""),
     }
 
@@ -36,14 +36,15 @@ object Command : FunctionalCommand {
         if (!arg.isValid(args)) return "$prefix §c${arg.howToUse(label)}".toPlayer(player)
 
         when (arg) {
-            OpArg.test -> {}
+            OpArg.test -> {
+            }
             OpArg.creature -> {
-                val designWorld = WorldClass.getDesignWorld(player.world)
-                    ?: return "$prefix §c이 월드는 디자인 월드가 아닙니다.".toPlayer(player)
-
                 val target = if (args.lastIndex == 3) Bukkit.getPlayer(args.last())
                     ?: return "$prefix §c플레이어를 찾을 수 없습니다.".toPlayer(player)
                 else player
+
+                val designWorld = WorldClass.getDesignWorld(target.world)
+                    ?: return "$prefix §c대상이 디자인 월드에 있지 않습니다.".toPlayer(player)
 
                 if (args.lastIndex == 1) return when (args[1]) {
                     "slayer" -> designWorld.setSlayer(player, null)
@@ -96,6 +97,11 @@ object Command : FunctionalCommand {
                     else -> return "$prefix §c${arg.howToUse(label)}".toPlayer(player)
                 }
             }
+
+            OpArg.start -> {
+                val worldName = WorldClass.convertUnicode(args.last())
+                WorldClass.enableRacingWorld(worldName) ?: "$prefix §c존재하지 않는 월드이거나 레이싱이 진행 중입니다.".toPlayer(player)
+            }
         }
         return
     }
@@ -144,6 +150,9 @@ object Command : FunctionalCommand {
                     if (args[1] == "save") WorldClass.worldList().add()
                     if (args[1] == "open") WorldClass.worldList().add()
                 }
+            }
+            OpArg.start -> when (lastIndex) {
+                1 -> WorldClass.worldList().add()
             }
 
             OpArg.test -> {}

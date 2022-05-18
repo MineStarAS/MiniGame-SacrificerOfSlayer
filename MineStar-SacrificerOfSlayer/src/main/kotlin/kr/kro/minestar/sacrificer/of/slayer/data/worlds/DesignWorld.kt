@@ -13,6 +13,8 @@ import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
 import kotlin.math.absoluteValue
@@ -48,23 +50,22 @@ class DesignWorld(world: World) : WorldData(world) {
      * Event function
      */
     @EventHandler
-    override fun attack(e: EntityDamageByEntityEvent) {
-        if (e.entity.world != world) return
-        super.attack(e)
-    }
-
+    override fun attack(e: EntityDamageByEntityEvent) = super.attack(e)
 
     @EventHandler
-    override fun active(e: PlayerSwapHandItemsEvent) {
-        if (e.player.world != world) return
-        super.active(e)
-    }
+    override fun active(e: PlayerSwapHandItemsEvent) = super.active(e)
 
     @EventHandler
-    override fun useTool(e: PlayerInteractEvent) {
-        if (e.player.world != world) return
-        super.useTool(e)
-    }
+    override fun useTool(e: PlayerInteractEvent) = super.useTool(e)
+
+    @EventHandler
+    override fun slayerDamaged(e: EntityDamageEvent) = super.slayerDamaged(e)
+
+    @EventHandler
+    override fun death(e: PlayerDeathEvent) = super.death(e)
+
+    @EventHandler
+    override fun damagedPassive(e: EntityDamageEvent) = super.damagedPassive(e)
 
     /**
      * Mark function

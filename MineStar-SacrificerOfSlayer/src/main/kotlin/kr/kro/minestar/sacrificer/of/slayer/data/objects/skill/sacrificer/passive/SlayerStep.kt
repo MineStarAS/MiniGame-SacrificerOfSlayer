@@ -1,24 +1,27 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.PassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.sound.PlaySound
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
+import org.bukkit.event.Event
+import org.bukkit.event.entity.EntityDamageEvent
 
-object SlayerStep : PassiveSkill() {
-    override val name: String = "학살자의 발소리"
-    override val description = mutableListOf("슬레이어으로부터 특별한 소리가 들립니다")
+object SlayerStep : TickPassiveSkill() {
+    override val name: String = "슬레이어의 발소리"
+    override val description = mutableListOf("슬레이어의 발소리가 들립니다")
     override val skillType: SkillType = SkillType.SEARCH
     override val period = 20
 
-    override fun effect(playerCreature: PlayerCreature, worldData: WorldData) {
+    override fun effect(playerCreature: PlayerCreature, worldData: WorldData, e: Event?) {
         if (!canEffectActivation(playerCreature)) return
-        for (creature in worldData.getCreatures()) if (creature.creature is Slayer) slayerStep.play(playerCreature.player, creature.player.location)
-
+        for (creature in worldData.getCreatures())
+            if (creature.creature is Slayer)
+                slayerStep.play(playerCreature.player, creature.player.location)
     }
 
     private val slayerStep = PlaySound().apply {

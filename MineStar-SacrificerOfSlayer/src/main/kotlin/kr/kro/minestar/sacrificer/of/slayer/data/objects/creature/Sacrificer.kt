@@ -6,12 +6,14 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.Tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.ActiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.PassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive.IronArmor
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive.SlayerStep
 
 enum class Sacrificer : Creature {
     KEY_MASTER("열쇠공", MasterKey),
-    LISTENER("경청자", SlayerStep),
-    EXCHANGER("교체자", SwitchPosition),
+    LISTENER("리스너", SlayerStep),
+    EXCHANGER("익스체인저", SwitchPosition),
+    IRON_KNIGHT("아이언 나이트", IronArmor),
     ;
 
     override val displayName: String

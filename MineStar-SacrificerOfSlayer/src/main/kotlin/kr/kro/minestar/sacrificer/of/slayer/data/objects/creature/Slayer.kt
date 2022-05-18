@@ -3,7 +3,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.creature
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.JumpBomb
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.Tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon.BlastHammer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon.HiddenDagger
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon.PoisonBlade
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon.MurderAxe
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.ActiveSkill
@@ -16,9 +16,10 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Ch
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Hide
 
 enum class Slayer : Creature {
-    SLAUGHTER("도살자", MurderAxe, Dash, Chase),
-    ASSASSIN("암살자", HiddenDagger, ThrowDagger, Hide),
+    SLAUGHTERER("도살자", MurderAxe, Dash, Chase),
+    ASSASSIN("암살자", PoisonBlade, ThrowDagger, Hide),
     BLAST_MANIAC("폭파광", BlastHammer, ImpactGrenade, BangBangBomb, JumpBomb),
+    MADDEST_PHARMACIST("위험한 약사", BlastHammer, ImpactGrenade, BangBangBomb, JumpBomb),
     ;
 
     override val displayName: String

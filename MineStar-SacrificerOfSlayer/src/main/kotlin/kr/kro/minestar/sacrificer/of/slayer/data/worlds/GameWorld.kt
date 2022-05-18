@@ -18,10 +18,14 @@ import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.FoodLevelChangeEvent
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerGameModeChangeEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
+import org.bukkit.scoreboard.Team
 
 class GameWorld(world: World, private val worldName: String) : WorldData(world) {
     init {
@@ -30,9 +34,14 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         gameReady()
     }
 
-
     private fun allPlayers() = Bukkit.getOnlinePlayers()
-    private val worldPlayers = world.players
+    private fun worldPlayers() = world.players
+
+    val team = Bukkit.getScoreboardManager().mainScoreboard.getTeam("player")
+        ?: Bukkit.getScoreboardManager().mainScoreboard.registerNewTeam("player").apply {
+            setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER)
+            setCanSeeFriendlyInvisibles(false)
+        }
 
     /**
     Game function
@@ -45,14 +54,20 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         }
 
         val scheduler = Scheduler(pl)
-        scheduler.addRun(RunNow { SoundClass.gameWorldEnter.play(worldPlayers) })
-        scheduler.addRun(RunTitle(worldPlayers, " ", "§c${WorldClass.readUnicode(worldName).removeUnderBar()}", 5, 60, 5, 20))
-        scheduler.addRun(RunTitle(worldPlayers, " ", "§c30초 후 각자의 역할이 지정됩니다", 5, 40, 5, 20))
-        var countDown = 30
-        scheduler.addRun(RunTitle(worldPlayers, " ", "§c$countDown", 5, 15, 0, 0))
-        while (countDown > 0) {
+        scheduler.addRun(RunNow { SoundClass.gameWorldEnter.play(worldPlayers()) })
+        scheduler.addRun(RunTitle(worldPlayers(), " ", "§c${WorldClass.readUnicode(worldName).removeUnderBar()}", 5, 60, 5, 20))
+        scheduler.addRun(RunTitle(worldPlayers(), " ", "§c30초 후 각자의 역할이 지정됩니다", 5, 40, 5, 20))
+        var countDown = 3
+        scheduler.addRun(RunNow {
+            for (player in worldPlayers())
+                player.addPotionEffect(
+                    PotionEffect(PotionEffectType.SPEED, 20 * countDown, 2,
+                        false, false, true))
+        })
+        scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 5, 16, 0, -1))
+        while (countDown >= 0) {
             --countDown
-            scheduler.addRun(RunTitle(worldPlayers, " ", "§c$countDown", 0, 20, 0, 0))
+            scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 0, 21, 0, -1))
         }
         scheduler.addRun(RunNow { gameStart() })
 
@@ -67,9 +82,11 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
 
     private fun setCreature() {
         val livePlayer = mutableListOf<Player>()
-        for (player in worldPlayers) if (player.gameMode == GameMode.ADVENTURE) livePlayer.add(player)
+        for (player in worldPlayers()) if (player.gameMode == GameMode.ADVENTURE) livePlayer.add(player)
         livePlayer.shuffle()
+
         for (player in livePlayer) {
+            player.inventory.heldItemSlot = 4
             val creature = if (player == livePlayer.first()) PlayerCreature.randomSlayer(player, this)
             else PlayerCreature.randomSacrificer(player, this)
             addCreature(creature)
@@ -79,10 +96,14 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
     /**
      * Game finish function
      */
+    var finish = false
+
     fun checkFinish() {
         var slayer = 0
         var sacrificer = 0
         for (creature in creatureMap.values) {
+            if (!creature.player.isOnline) continue
+            if (creature.player.world != world) continue
             if (creature.player.gameMode != GameMode.ADVENTURE) continue
             if (creature.creature is Slayer) slayer++
             else if (creature.creature is Sacrificer) sacrificer++
@@ -92,25 +113,23 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
     }
 
     private fun slayerWin() {
-
         val scheduler = Scheduler(pl)
-        scheduler.addRun(RunNow { SoundClass.slayerWinMusic(worldPlayers) })
-        scheduler.addRun(RunTitle(worldPlayers, "§cSlayer", "§eWon", 5, 40, 5, 15))
-        scheduler.addRun(RunTitle(worldPlayers, " ", "§a잠시 후 오버월드로 이동합니다", 5, 50, 5, 20 * 3))
+        scheduler.addRun(RunNow { SoundClass.slayerWinMusic(worldPlayers()) })
+        scheduler.addRun(RunTitle(worldPlayers(), "§cSlayer", "§eWon", 5, 40, 5, 15))
+        scheduler.addRun(RunTitle(worldPlayers(), " ", "§a잠시 후 오버월드로 이동합니다", 5, 50, 5, 20 * 3))
+        scheduler.addRun(RunNow { gameFinishing() })
 
         scheduler.play()
-
-        gameFinishing()
     }
 
     private fun sacrificerWin() {
-        SoundClass.slayerWinMusic(worldPlayers)
+        SoundClass.slayerWinMusic(worldPlayers())
         gameFinishing()
     }
 
     private fun gameFinishing() {
         val world = Bukkit.getWorlds().first()
-        for (player in worldPlayers) {
+        for (player in worldPlayers()) {
             player.gameMode = GameMode.ADVENTURE
             for (potionEffect in player.activePotionEffects) player.removePotionEffect(potionEffect.type)
             player.teleport(world.spawnLocation)
@@ -125,22 +144,22 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
      * Event function
      */
     @EventHandler
-    override fun attack(e: EntityDamageByEntityEvent) {
-        if (e.entity.world != world) return
-        super.attack(e)
-    }
+    override fun attack(e: EntityDamageByEntityEvent) = super.attack(e)
 
     @EventHandler
-    override fun active(e: PlayerSwapHandItemsEvent) {
-        if (e.player.world != world) return
-        super.active(e)
-    }
+    override fun active(e: PlayerSwapHandItemsEvent) = super.active(e)
 
     @EventHandler
-    override fun useTool(e: PlayerInteractEvent) {
-        if (e.player.world != world) return
-        super.useTool(e)
-    }
+    override fun useTool(e: PlayerInteractEvent) = super.useTool(e)
+
+    @EventHandler
+    override fun slayerDamaged(e: EntityDamageEvent) = super.slayerDamaged(e)
+
+    @EventHandler
+    override fun death(e: PlayerDeathEvent) = super.death(e)
+
+    @EventHandler
+    override fun damagedPassive(e: EntityDamageEvent) = super.damagedPassive(e)
 
     /**
      * Lock event
@@ -150,12 +169,6 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         if (e.player.world != world) return
         if (e.newGameMode == GameMode.SURVIVAL) return
         if (e.newGameMode == GameMode.CREATIVE) return
-        e.isCancelled = true
-    }
-
-    @EventHandler
-    private fun foodLevelChangeLock(e: FoodLevelChangeEvent) {
-        if (e.entity.world != world) return
         e.isCancelled = true
     }
 }

@@ -47,7 +47,7 @@ object ThrowDagger : ActiveSkill() {
                     if (targets.toTypedArray().isNotEmpty())
                         for (target in targets) if (target != player)
                             if (target.gameMode != GameMode.SPECTATOR) {
-                                target.addPotionEffect(PotionEffect(PotionEffectType.POISON, duration, 1))
+                                target.addPotionEffect(PotionEffect(PotionEffectType.POISON, duration, 1, false, false, true))
                                 break
                             }
                 }

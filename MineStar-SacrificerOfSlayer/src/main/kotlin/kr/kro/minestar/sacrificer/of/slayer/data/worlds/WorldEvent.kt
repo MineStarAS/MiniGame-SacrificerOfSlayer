@@ -1,12 +1,7 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.worlds
 
-import kr.kro.minestar.sacrificer.of.slayer.Main
-import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
-import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
-import kr.kro.minestar.utility.event.enable
-import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.World
 import org.bukkit.entity.Player
@@ -17,28 +12,29 @@ import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
-import org.bukkit.scheduler.BukkitTask
-import java.io.File
 
-@Suppress("DEPRECATION")
-abstract class WorldData(final override val world: World) : WorldEvent {
-
-    protected var folder = File("${WorldClass.worldFolder}/${world.name}")
-
-    private fun startLocation() = world.spawnLocation.clone()
-
+interface WorldEvent: Listener {
+    val world: World
 
     /**
      * Creature function
      */
-    override val creatureMap = hashMapOf<Player, PlayerCreature>()
+
+    val creatureMap : HashMap<Player, PlayerCreature>
+    fun addCreature(creature: PlayerCreature): Boolean {
+        if (this is GameWorld) if (creatureMap.contains(creature.player)) return false
+        creatureMap[creature.player] = creature
+        return true
+    }
+
+    fun getCreature(player: Player) = creatureMap[player]
+    fun getCreatures() = creatureMap.values
 
     /**
      * Event function
      */
-    /*
     @EventHandler
-    protected open fun attack(e: EntityDamageByEntityEvent) {
+    fun attack(e: EntityDamageByEntityEvent) {
         if (e.entity.world != world) return
         e.isCancelled = true
 
@@ -53,7 +49,7 @@ abstract class WorldData(final override val world: World) : WorldEvent {
     }
 
     @EventHandler
-    protected open fun active(e: PlayerSwapHandItemsEvent) {
+    fun active(e: PlayerSwapHandItemsEvent) {
         if (e.player.world != world) return
         if (e.player.gameMode != GameMode.ADVENTURE) return
         e.isCancelled = true
@@ -65,7 +61,7 @@ abstract class WorldData(final override val world: World) : WorldEvent {
     }
 
     @EventHandler
-    protected open fun useTool(e: PlayerInteractEvent) {
+    fun useTool(e: PlayerInteractEvent) {
         if (e.player.world != world) return
         if (e.player.gameMode != GameMode.ADVENTURE) return
         if (!e.action.isRightClick) return
@@ -75,7 +71,7 @@ abstract class WorldData(final override val world: World) : WorldEvent {
     }
 
     @EventHandler
-    protected open fun slayerDamaged(e: EntityDamageEvent) {
+    fun slayerDamaged(e: EntityDamageEvent) {
         if (e.entity.world != world) return
         if (e.entity !is Player) return
 
@@ -88,7 +84,7 @@ abstract class WorldData(final override val world: World) : WorldEvent {
     }
 
     @EventHandler
-    protected open fun death(e: PlayerDeathEvent) {
+    fun death(e: PlayerDeathEvent) {
         if (e.player.world != world) return
         val player = e.player
         e.isCancelled = true
@@ -101,47 +97,12 @@ abstract class WorldData(final override val world: World) : WorldEvent {
      * Passive trigger event
      */
     @EventHandler
-    protected open fun damagedPassive(e: EntityDamageEvent) {
+    fun damagedPassive(e: EntityDamageEvent) {
         if (e.entity.world != world) return
         if (e.entity !is Player) return
 
         val player = e.entity as Player
         val playerCreature = getCreature(player) ?: return
         playerCreature.passiveActivation(e)
-    }*/
-
-    /**
-     * Task function
-     */
-    private var tickTask: BukkitTask? = null
-    protected fun tickTaskRun() {
-        tickTaskCancel()
-        tickTask = Bukkit.getScheduler().runTaskTimer(Main.pl, Runnable {
-            for (creature in creatureMap.values) {
-                if (creature.player.gameMode == GameMode.SPECTATOR) continue
-                creature.removeActiveCoolTime()
-                creature.passiveActivation(null)
-            }
-            if (this is GameWorld) if (!finish) checkFinish()
-        }, 0, 1)
-    }
-
-    protected fun tickTaskCancel() {
-        tickTask?.cancel()
-        tickTask = null
-    }
-
-    /**
-     * Other function
-     */
-    fun teleportToStartLocation(player: Player) {
-        player.gameMode = GameMode.ADVENTURE
-        player.teleport(startLocation())
-        player.health = player.maxHealth
-    }
-
-    protected fun inventoryClear(player: Player) {
-        val inventory = player.inventory
-        inventory.clear()
     }
 }

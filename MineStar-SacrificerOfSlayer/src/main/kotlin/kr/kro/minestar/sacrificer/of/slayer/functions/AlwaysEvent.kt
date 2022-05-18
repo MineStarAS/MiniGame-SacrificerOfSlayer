@@ -5,19 +5,28 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.Imp
 import kr.kro.minestar.utility.event.enable
 import kr.kro.minestar.utility.location.Axis
 import kr.kro.minestar.utility.location.addAxis
+import kr.kro.minestar.utility.string.toServer
+import org.bukkit.Bukkit
 import org.bukkit.Particle
-import org.bukkit.Sound
-import org.bukkit.SoundCategory
 import org.bukkit.entity.Entity
+import org.bukkit.entity.Item
 import org.bukkit.entity.ShulkerBullet
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.ProjectileHitEvent
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.event.player.PlayerPickupItemEvent
 
-object AlwaysEvent: Listener {
+object AlwaysEvent : Listener {
 
     init {
         enable(pl)
+    }
+
+    @EventHandler
+    fun join(e: PlayerJoinEvent) {
+        e.player.teleport(Bukkit.getWorlds().first().spawnLocation)
     }
 
     @EventHandler

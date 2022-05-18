@@ -25,7 +25,7 @@ object MasterKey : Tool {
         val door = clickBlock.blockData
         if (door !is Door) return false
         if (door.material != Material.IRON_DOOR) return false
-        door.isOpen = door.isOpen
+        door.isOpen = !door.isOpen
         clickBlock.blockData = door
         if (door.isOpen) doorOpenSound.play(clickBlock.location)
         else doorCloseSound.play(clickBlock.location)

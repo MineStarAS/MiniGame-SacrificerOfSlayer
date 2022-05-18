@@ -3,19 +3,16 @@ package kr.kro.minestar.sacrificer.of.slayer.data.player
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Creature
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.number.round
-import kr.kro.minestar.utility.string.toPlayer
-import kr.kro.minestar.utility.string.toServer
 import org.bukkit.entity.Player
+import org.bukkit.event.Event
 import org.bukkit.event.player.PlayerInteractEvent
 
 @Suppress("DEPRECATION")
 class PlayerCreature(val player: Player, private val worldData: WorldData, val creature: Creature) {
     companion object {
-        /**
-         * Constructor function
-         */
         internal fun randomSlayer(player: Player, worldData: WorldData): PlayerCreature {
             val creature = Slayer.values().random()
             return PlayerCreature(player, worldData, creature)
@@ -72,7 +69,8 @@ class PlayerCreature(val player: Player, private val worldData: WorldData, val c
     /**
      * Passive period function
      */
-    private var passivePeriod = creature.passiveSkill?.period ?: 0
+    private var passivePeriod = if (creature.passiveSkill is TickPassiveSkill) (creature.passiveSkill!! as TickPassiveSkill).period
+    else 0
 
     fun removePassivePeriod() {
         if (passivePeriod <= 0) return
@@ -85,7 +83,7 @@ class PlayerCreature(val player: Player, private val worldData: WorldData, val c
 
     fun canPassiveActivation(): Boolean = passivePeriod <= 0
 
-    fun passiveActivation() = creature.passiveSkill?.effect(this, worldData)
+    fun passiveActivation(e: Event?) = creature.passiveSkill?.effectActivation(this, worldData, e)
 
     /**
      * Tool function

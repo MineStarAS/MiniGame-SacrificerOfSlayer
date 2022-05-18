@@ -18,12 +18,12 @@ object MurderAxe : Weapon() {
     override fun hitEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         val attacker = e.damager as Player
-        target.addPotionEffect(PotionEffect(PotionEffectType.SLOW, 20 * 3, 0))
+        target.addPotionEffect(PotionEffect(PotionEffectType.SLOW, 20 * 3, 0, false, false, true))
     }
 
     override fun killEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         val attacker = e.damager as Player
-        attacker.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 20 * 5, 2))
+        attacker.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 20 * 5, 2, false, false, true))
     }
 }
