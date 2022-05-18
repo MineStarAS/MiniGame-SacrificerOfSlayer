@@ -26,7 +26,7 @@ subprojects {
         maven(url = "https://oss.sonatype.org/content/repositories/snapshots/") {
             name = "sonatype-oss-snapshots"
         }
-        maven("https://repo.projecttl.net/repository/maven-public/")
+        maven(url = "https://jitpack.io/")
     }
 
     dependencies {
@@ -35,7 +35,7 @@ subprojects {
         compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 
         //MineStar
-        implementation(files("C:\\Users\\MineStar\\Desktop\\MC Server folder\\libs\\Utility-API-1.0.7.jar"))
+        implementation("com.github.MineStarAS:Utility-API:1.0.0")
 
         //other
         // https://mvnrepository.com/artifact/commons-io/commons-io

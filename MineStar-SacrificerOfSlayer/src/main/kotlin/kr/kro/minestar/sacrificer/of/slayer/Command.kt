@@ -31,10 +31,9 @@ object Command : FunctionalCommand {
 
         if (args.isEmpty()) return "$prefix $label".toPlayer(player)
 
-        val arg = argument(Arg.values(), args) ?: if (player.isOp) argument(OpArg.values(), args) else return
+        val arg = argument(Arg.values(), args) ?: if (player.isOp) argument(OpArg.values(), args) ?: return else return
 
-        if (arg?.isValid(args) == false)
-            return "$prefix §c${arg.howToUse(label)}".toPlayer(player)
+        if (!arg.isValid(args)) return "$prefix §c${arg.howToUse(label)}".toPlayer(player)
 
         when (arg) {
             OpArg.test -> {}
