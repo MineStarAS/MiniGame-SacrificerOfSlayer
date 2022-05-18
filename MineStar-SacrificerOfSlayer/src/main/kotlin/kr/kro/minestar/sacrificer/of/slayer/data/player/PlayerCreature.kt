@@ -1,78 +1,94 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.player
 
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Creature
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Creature
-import kr.kro.minestar.sacrificer.of.slayer.data.worlds.GameWorld
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.utility.number.round
+import kr.kro.minestar.utility.string.toPlayer
+import kr.kro.minestar.utility.string.toServer
 import org.bukkit.entity.Player
-import org.reflections.Reflections
-import org.reflections.scanners.SubTypesScanner
-import java.util.stream.Collectors
+import org.bukkit.event.player.PlayerInteractEvent
 
-class PlayerCreature(val player: Player, val creature: Creature, val gameWorld: GameWorld) {
+@Suppress("DEPRECATION")
+class PlayerCreature(val player: Player, private val worldData: WorldData, val creature: Creature) {
     companion object {
-        /**
-         * Field
-         */
-        private const val slayerPackage = "kr.kro.minestar.sfos.objects.creature.slayer"
-        private const val sacrificerPackage = "kr.kro.minestar.sfos.objects.creature.sacrificer"
-
-        private val slayerArray = packageInClasses(slayerPackage)!!.toTypedArray()
-        private val sacrificerArray = packageInClasses(sacrificerPackage)!!.toTypedArray()
-
         /**
          * Constructor function
          */
-        internal fun randomSlayer(player: Player, gameWorld: GameWorld): PlayerCreature {
-            val creature: Creature? = null
-            return PlayerCreature(player, creature!!, gameWorld)
+        internal fun randomSlayer(player: Player, worldData: WorldData): PlayerCreature {
+            val creature = Slayer.values().random()
+            return PlayerCreature(player, worldData, creature)
         }
 
-        /**
-         * Creature function
-         */
-        private fun packageInClasses(packageName: String?): Set<Class<*>>? {
-            val reflections = Reflections(packageName, SubTypesScanner(false))
-            return reflections.getSubTypesOf(Any::class.java).stream().collect(Collectors.toSet())
-        }
-
-        private fun getSlayerList(): List<String> {
-            val list: MutableList<String> = mutableListOf()
-            for (clazz in slayerArray) list.add(clazz.simpleName)
-            return list
-        }
-
-        private fun getSacrificerList(): List<String> {
-            val list: MutableList<String> = mutableListOf()
-            for (c in sacrificerArray) list.add(c.simpleName)
-            return list
-        }
-
-        private fun getSlayer(player: Player, slayerName: String): Slayer? {
-            val slayerClass = Class.forName("${slayerPackage}.$slayerName") ?: return null
-            val constructor = slayerClass.constructors ?: return null
-            return constructor.first().newInstance(player) as Slayer
-        }
-
-        private fun getSacrificer(player: Player, sacrificerName: String): Sacrificer? {
-            val slayerClass = Class.forName("${sacrificerPackage}.$sacrificerName") ?: return null
-            val constructor = slayerClass.constructors
-            return constructor.first().newInstance(player) as Sacrificer
-        }
-
-        private fun randomSlayer(player: Player): Slayer {
-            val slayerClass: Class<*>? = Class.forName("${slayerPackage}." + slayerArray.random().simpleName)
-            val constructor = slayerClass!!.constructors
-            return constructor.first().newInstance(player) as Slayer
-        }
-
-        private fun randomSacrificer(player: Player): Sacrificer {
-            val sacrificerClass: Class<*>? = Class.forName("${sacrificerPackage}." + sacrificerArray.random().simpleName)
-            val constructor = sacrificerClass!!.constructors
-            return constructor.first().newInstance(player) as Sacrificer
+        internal fun randomSacrificer(player: Player, worldData: WorldData): PlayerCreature {
+            val creature = Sacrificer.values().random()
+            return PlayerCreature(player, worldData, creature)
         }
     }
 
-    var activeCoolDown = creature.activeSkill?.startCoolTime ?: 0
-    var passivePeriod = 0
+    init {
+        player.health = player.maxHealth
+        for (potionEffect in player.activePotionEffects) player.removePotionEffect(potionEffect.type)
+        val inventory = player.inventory
+        inventory.clear()
+        inventory.setItem(0, creature.weapon?.getItem())
+        inventory.setItem(1, creature.activeSkill?.getItem())
+        inventory.setItem(2, creature.passiveSkill?.getItem())
+        inventory.setItem(3, creature.tool?.getItem())
+
+        val creatureType = if (creature is Slayer) "§cSlayer"
+        else "§9Sacrificer"
+
+        player.sendTitle(creatureType, "§7당신의 역할은 §e${creature.displayName} §7입니다")
+    }
+
+    /**
+     * Active coolTime function
+     */
+    private var activeCoolTime = creature.activeSkill?.startCoolTime ?: 0
+    fun removeActiveCoolTime() {
+        if (activeCoolTime <= 0) return
+        activeCoolTime--
+        if (activeCoolTime == 0) player.sendTitle(" ", "§9액티브 스킬 준비완료", 5, 10, 5)
+    }
+
+    fun resetActiveCoolTime(coolTime: Int) {
+        activeCoolTime = coolTime
+    }
+
+    private fun canUseActiveSkill(): Boolean = activeCoolTime <= 0
+
+    fun useActiveSkill() {
+        val activeSkill = creature.activeSkill ?: return
+        if (!canUseActiveSkill()) {
+            val displayCoolTime = (activeCoolTime / 20.0).round(1)
+            player.sendTitle(" ", "§8재사용 대기시간: §7$displayCoolTime §8초", 5, 10, 5)
+            return
+        }
+        activeSkill.useActiveSkill(this, worldData)
+    }
+
+    /**
+     * Passive period function
+     */
+    private var passivePeriod = creature.passiveSkill?.period ?: 0
+
+    fun removePassivePeriod() {
+        if (passivePeriod <= 0) return
+        passivePeriod--
+    }
+
+    fun resetPassivePeriod(period: Int) {
+        passivePeriod = period
+    }
+
+    fun canPassiveActivation(): Boolean = passivePeriod <= 0
+
+    fun passiveActivation() = creature.passiveSkill?.effect(this, worldData)
+
+    /**
+     * Tool function
+     */
+    fun useTool(e: PlayerInteractEvent) = creature.tool?.use(e)
 }

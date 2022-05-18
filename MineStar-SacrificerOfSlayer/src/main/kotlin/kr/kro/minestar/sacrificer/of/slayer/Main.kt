@@ -2,6 +2,7 @@ package kr.kro.minestar.sacrificer.of.slayer
 
 import kr.kro.minestar.sacrificer.of.slayer.functions.AlwaysEvent
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
+import kr.kro.minestar.utility.event.enable
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -9,13 +10,13 @@ import java.io.File
 class Main : JavaPlugin() {
     companion object {
         lateinit var pl: Main
-        const val prefix = "§f[§9PLUGIN§f]"
+        const val prefix = "§f[§9SofS§f]"
     }
 
     override fun onEnable() {
         pl = this
         logger.info("$prefix §aEnable")
-        getCommand("sos")?.setExecutor(Command)
+        getCommand("sofs")?.setExecutor(Command)
 
 
         WorldClass.reloadEnable()
@@ -24,6 +25,8 @@ class Main : JavaPlugin() {
             createReloadCheckFile()
             WorldClass.deleteRacingWorlds()
         }
+
+        AlwaysEvent
     }
 
     override fun onDisable() {
@@ -34,8 +37,6 @@ class Main : JavaPlugin() {
             }
         }
         WorldClass.saveDesignWorlds()
-
-        AlwaysEvent
     }
 
     /**

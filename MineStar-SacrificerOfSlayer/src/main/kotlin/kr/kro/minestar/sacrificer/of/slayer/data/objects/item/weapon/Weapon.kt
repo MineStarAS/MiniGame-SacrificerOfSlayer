@@ -10,10 +10,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-interface Weapon : Item {
-    val damage: Double
-    val hitEffect: List<String>
-    val killEffect: List<String>
+abstract class Weapon : Item {
+    abstract override val displayName: String
+    protected abstract val damage: Double
+    protected abstract val hitEffect: List<String>
+    protected abstract val killEffect: List<String>
 
     fun hit(e: EntityDamageByEntityEvent) {
         e.isCancelled = true
@@ -35,11 +36,10 @@ interface Weapon : Item {
         hitEffect(e)
     }
 
-    fun hitEffect(e: EntityDamageByEntityEvent) {
-
+    protected open fun hitEffect(e: EntityDamageByEntityEvent) {
     }
 
-    fun killEffect(e: EntityDamageByEntityEvent) {
+    protected open fun killEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         target.gameMode = GameMode.SPECTATOR
         SoundClass.playerDeath.play(target.location)

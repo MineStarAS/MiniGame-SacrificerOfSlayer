@@ -1,18 +1,28 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.worlds
 
+import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
+import kr.kro.minestar.utility.event.enable
 import kr.kro.minestar.utility.location.toCenter
 import org.bukkit.Location
 import org.bukkit.World
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerSwapHandItemsEvent
 import kotlin.math.absoluteValue
 
 class DesignWorld(world: World) : WorldData(world) {
 
     init {
-        init()
+        enable(pl)
         WorldClass.addDesignWorld(this)
+        tickTaskRun()
     }
 
     fun save() {
@@ -20,7 +30,45 @@ class DesignWorld(world: World) : WorldData(world) {
         WorldClass.fileCopy(world.worldFolder, folder)
     }
 
+    /**
+     * Creature function
+     */
+    fun setSlayer(player: Player, slayer: Slayer?) {
+        val playerCreature = if (slayer != null) PlayerCreature(player, this, slayer)
+        else PlayerCreature.randomSlayer(player, this)
+        addCreature(playerCreature)
+    }
+    fun setSacrificer(player: Player, sacrificer: Sacrificer?) {
+        val playerCreature = if (sacrificer != null) PlayerCreature(player, this, sacrificer)
+        else PlayerCreature.randomSacrificer(player, this)
+        addCreature(playerCreature)
+    }
 
+    /**
+     * Event function
+     */
+    @EventHandler
+    override fun attack(e: EntityDamageByEntityEvent) {
+        if (e.entity.world != world) return
+        super.attack(e)
+    }
+
+
+    @EventHandler
+    override fun active(e: PlayerSwapHandItemsEvent) {
+        if (e.player.world != world) return
+        super.active(e)
+    }
+
+    @EventHandler
+    override fun useTool(e: PlayerInteractEvent) {
+        if (e.player.world != world) return
+        super.useTool(e)
+    }
+
+    /**
+     * Mark function
+     */
     private fun summonMark(location: Location): ArmorStand {
         val mark = world.spawn(location, ArmorStand::class.java)
         mark.setGravity(false)

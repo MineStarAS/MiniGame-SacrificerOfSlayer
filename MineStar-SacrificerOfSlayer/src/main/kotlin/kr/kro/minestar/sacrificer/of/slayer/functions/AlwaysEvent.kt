@@ -15,6 +15,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.ProjectileHitEvent
 
 object AlwaysEvent: Listener {
+
     init {
         enable(pl)
     }

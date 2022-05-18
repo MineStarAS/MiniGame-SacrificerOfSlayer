@@ -15,7 +15,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Ba
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Chase
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Hide
 
-internal enum class Slayer : Creature {
+enum class Slayer : Creature {
     SLAUGHTER("도살자", MurderAxe, Dash, Chase),
     ASSASSIN("암살자", HiddenDagger, ThrowDagger, Hide),
     BLAST_MANIAC("폭파광", BlastHammer, ImpactGrenade, BangBangBomb, JumpBomb),

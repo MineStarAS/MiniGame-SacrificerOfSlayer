@@ -1,17 +1,17 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.creature
 
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.MasterKey
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.SwitchPosition
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.Tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.ActiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.PassiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.MasterKey
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.SwitchPosition
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive.SlayerStep
 
-internal enum class Sacrificer: Creature {
+enum class Sacrificer : Creature {
     KEY_MASTER("열쇠공", MasterKey),
     LISTENER("경청자", SlayerStep),
-    EXCHANGER("교환자", SwitchPosition),
+    EXCHANGER("교체자", SwitchPosition),
     ;
 
     override val displayName: String

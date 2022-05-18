@@ -1,11 +1,14 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill
 
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive.SlayerStep
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
-import kr.kro.minestar.sacrificer.of.slayer.data.worlds.GameWorld
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.utility.string.toPlayer
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
-interface PassiveSkill : Skill {
+abstract class PassiveSkill : Skill {
+    abstract val period: Int
 
     fun getItem(): ItemStack {
         val item = ItemStack(Material.GOLD_INGOT)
@@ -18,5 +21,14 @@ interface PassiveSkill : Skill {
         return item
     }
 
-    fun effect(playerCreature: PlayerCreature, gameWorld: GameWorld)
+    abstract fun effect(playerCreature: PlayerCreature, worldData: WorldData)
+
+    protected fun canEffectActivation(playerCreature: PlayerCreature): Boolean {
+        if (!playerCreature.canPassiveActivation()) {
+            playerCreature.removePassivePeriod()
+            return false
+        }
+        playerCreature.resetPassivePeriod(period)
+        return true
+    }
 }

@@ -1,47 +1,21 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill
 
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
-import kr.kro.minestar.sacrificer.of.slayer.data.worlds.GameWorld
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
-interface ActiveSkill : Skill {
-    val coolTime: Int
-    val startCoolTime: Int
-    val duration: Int
+abstract class ActiveSkill : Skill {
+    protected abstract val coolTime: Int
+    abstract val startCoolTime: Int
+    protected abstract val duration: Int
 
-    fun active(playerCreature: PlayerCreature, gameWorld: GameWorld)
-
-    /*
-    fun coolDownLock(): Boolean {
-        if (coolDownTimer == null) return false
-        player.sendTitle(" ", "§8재사용 대기시간: §7${coolDown / 20.0} §8초", 5, 10, 5)
-        return true
+    fun useActiveSkill(playerCreature: PlayerCreature, worldData: WorldData) {
+        playerCreature.resetActiveCoolTime(coolTime)
+        activeEffect(playerCreature, worldData)
     }
 
-    fun coolDownTimer() {
-        coolDown = coolTime
-        coolDownTimer = Bukkit.getScheduler().runTaskTimer(pl, Runnable {
-            --coolDown
-            if (coolDown == 0) {
-                player.sendTitle(" ", "§9액티브 스킬 준비완료", 5, 10, 5)
-                coolDownTimer?.cancel() ?: "is null".toPlayer(player)
-                coolDownTimer = null
-            }
-        }, 0, 1)
-    }
-
-    fun startCoolDownTimer() {
-        if (coolDown == 0) return
-        coolDownTimer = Bukkit.getScheduler().runTaskTimer(pl, Runnable {
-            --coolDown
-            if (coolDown == 0) {
-                player.sendTitle(" ", "§9액티브 스킬 준비완료", 5, 10, 5)
-                coolDownTimer?.cancel()?: "is null".toPlayer(player)
-                coolDownTimer = null
-            }
-        }, 0, 1)
-    }*/
+    protected abstract fun activeEffect(playerCreature: PlayerCreature, worldData: WorldData)
 
     fun getItem(): ItemStack {
         val item = ItemStack(Material.IRON_INGOT)

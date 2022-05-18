@@ -78,7 +78,7 @@ object WorldClass {
     }
 
     internal fun enableRacingWorld(worldName: String): GameWorld? {
-        if (isRacingNow()) return null
+        if (isGamingNow()) return null
         val worldFolder = File("$worldFolder/$worldName")
         if (!isWorldFolder(worldFolder)) return null
 
@@ -121,13 +121,13 @@ object WorldClass {
      */
     private var gameWorld: GameWorld? = null
 
-    private fun isRacingNow() = gameWorld != null
+    private fun isGamingNow() = gameWorld != null
 
-    internal fun startRacing(gameWorld: GameWorld) {
-        if (!isRacingNow()) this.gameWorld = gameWorld
+    internal fun startGame(gameWorld: GameWorld) {
+        if (!isGamingNow()) this.gameWorld = gameWorld
     }
 
-    internal fun finishRacing(gameWorld: GameWorld) {
+    internal fun finishGame(gameWorld: GameWorld) {
         if (this.gameWorld == gameWorld) this.gameWorld = null
     }
 

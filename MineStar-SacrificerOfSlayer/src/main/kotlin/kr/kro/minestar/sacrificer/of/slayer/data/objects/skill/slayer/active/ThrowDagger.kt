@@ -4,7 +4,7 @@ import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.ActiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
-import kr.kro.minestar.sacrificer.of.slayer.data.worlds.GameWorld
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.location.look
 import kr.kro.minestar.utility.location.offset
 import kr.kro.minestar.utility.scheduler.Scheduler
@@ -19,7 +19,7 @@ import org.bukkit.entity.Player
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-object ThrowDagger : ActiveSkill {
+object ThrowDagger : ActiveSkill() {
 
     override val name: String = "단검 투척"
     override val description = mutableListOf(
@@ -31,7 +31,7 @@ object ThrowDagger : ActiveSkill {
     override val duration = 20 * 5
     override val skillType = SkillType.ATTACK
 
-    override fun active(playerCreature: PlayerCreature, gameWorld: GameWorld) {
+    override fun activeEffect(playerCreature: PlayerCreature, worldData: WorldData) {
         val player = playerCreature.player
         val players = player.location.getNearbyPlayers(5.0)
         for (p in players) {

@@ -3,10 +3,10 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.ActiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
-import kr.kro.minestar.sacrificer.of.slayer.data.worlds.GameWorld
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import org.bukkit.util.Vector
 
-object Dash : ActiveSkill {
+object Dash : ActiveSkill() {
 
     override val name: String = "대쉬"
     override val description = mutableListOf(
@@ -17,7 +17,7 @@ object Dash : ActiveSkill {
     override val duration = 20 * 0
     override val skillType = SkillType.MOVEMENT
 
-    override fun active(playerCreature: PlayerCreature, gameWorld: GameWorld) {
+    override fun activeEffect(playerCreature: PlayerCreature, worldData: WorldData) {
         val player = playerCreature.player
         val x = player.location.direction.x
         val z = player.location.direction.z

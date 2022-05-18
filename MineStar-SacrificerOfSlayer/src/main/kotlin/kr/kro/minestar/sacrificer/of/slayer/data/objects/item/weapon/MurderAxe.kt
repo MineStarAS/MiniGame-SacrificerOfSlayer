@@ -6,7 +6,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-object MurderAxe : Weapon {
+object MurderAxe : Weapon() {
 
     override val material: Material = Material.IRON_AXE
     override val displayName: String = "살인 도끼"

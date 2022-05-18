@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.util.Vector
 
-object BlastHammer : Weapon {
+object BlastHammer : Weapon() {
 
     override val material: Material = Material.IRON_AXE
     override val displayName: String = "폭발 망치"

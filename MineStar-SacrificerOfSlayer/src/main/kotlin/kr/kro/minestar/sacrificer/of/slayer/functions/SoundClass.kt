@@ -1,11 +1,14 @@
 package kr.kro.minestar.sacrificer.of.slayer.functions
 
 import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
+import kr.kro.minestar.utility.location.Axis
+import kr.kro.minestar.utility.location.addAxis
 import kr.kro.minestar.utility.sound.PlaySound
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
+import org.bukkit.entity.Player
 import java.lang.Double.min
 
 object SoundClass {
@@ -41,5 +44,36 @@ object SoundClass {
         sound.play(location)
         explodeSet.add(location)
         Bukkit.getScheduler().runTaskLater(pl, Runnable { explodeSet.remove(location) }, 3)
+    }
+
+    /**
+     * Game sound
+     */
+
+    val gameWorldEnter = PlaySound().apply {
+        soundCategory = SoundCategory.RECORDS
+        sound = Sound.ENTITY_WITHER_SPAWN
+        volume = 0.5F
+        pitch = 0.5F
+    }
+
+    internal fun slayerWinMusic(players: Collection<Player>) {
+        val sound = PlaySound().apply {
+            soundCategory = SoundCategory.RECORDS
+            sound = Sound.UI_TOAST_CHALLENGE_COMPLETE
+            volume = 100F
+            pitch = 0.8F
+        }
+        for (player in players) sound.play(player, player.location.addAxis(Axis.Y, 500))
+    }
+
+    internal fun sacrificerWinMusic(players: Collection<Player>) {
+        val sound = PlaySound().apply {
+            soundCategory = SoundCategory.RECORDS
+            sound = Sound.UI_TOAST_CHALLENGE_COMPLETE
+            volume = 100F
+            pitch = 1.5F
+        }
+        for (player in players) sound.play(player, player.location.addAxis(Axis.Y, 500))
     }
 }

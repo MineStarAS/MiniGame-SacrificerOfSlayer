@@ -6,7 +6,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-object HiddenDagger : Weapon {
+object HiddenDagger : Weapon() {
 
     override val material: Material = Material.IRON_SWORD
     override val displayName: String = "히든 대거"
