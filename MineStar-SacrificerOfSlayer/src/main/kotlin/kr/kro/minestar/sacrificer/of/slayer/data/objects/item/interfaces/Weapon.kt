@@ -1,8 +1,7 @@
 @file:Suppress("DEPRECATION")
 
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.Item
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import org.bukkit.GameMode
 import org.bukkit.entity.Player

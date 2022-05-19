@@ -1,4 +1,4 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
 
 import kr.kro.minestar.utility.item.isSameItem
 import org.bukkit.Material

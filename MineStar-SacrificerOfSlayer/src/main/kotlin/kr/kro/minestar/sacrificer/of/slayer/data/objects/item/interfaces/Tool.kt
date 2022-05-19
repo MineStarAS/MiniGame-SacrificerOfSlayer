@@ -1,7 +1,6 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.SkillType
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.Item
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
 import kr.kro.minestar.utility.item.addLore
 import kr.kro.minestar.utility.item.amount
 import kr.kro.minestar.utility.item.display

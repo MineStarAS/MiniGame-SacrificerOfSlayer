@@ -47,27 +47,6 @@ class DesignWorld(world: World) : WorldData(world) {
     }
 
     /**
-     * Event function
-     */
-    @EventHandler
-    override fun attack(e: EntityDamageByEntityEvent) = super.attack(e)
-
-    @EventHandler
-    override fun active(e: PlayerSwapHandItemsEvent) = super.active(e)
-
-    @EventHandler
-    override fun useTool(e: PlayerInteractEvent) = super.useTool(e)
-
-    @EventHandler
-    override fun slayerDamaged(e: EntityDamageEvent) = super.slayerDamaged(e)
-
-    @EventHandler
-    override fun death(e: PlayerDeathEvent) = super.death(e)
-
-    @EventHandler
-    override fun damagedPassive(e: EntityDamageEvent) = super.damagedPassive(e)
-
-    /**
      * Mark function
      */
     private fun summonMark(location: Location): ArmorStand {

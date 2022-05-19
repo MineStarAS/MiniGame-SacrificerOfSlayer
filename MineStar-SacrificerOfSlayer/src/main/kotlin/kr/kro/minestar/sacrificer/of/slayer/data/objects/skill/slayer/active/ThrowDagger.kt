@@ -1,8 +1,8 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active
 
 import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.ActiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.location.look

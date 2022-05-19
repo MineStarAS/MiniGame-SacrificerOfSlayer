@@ -1,7 +1,7 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.SkillType
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.TickPassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.location.offset

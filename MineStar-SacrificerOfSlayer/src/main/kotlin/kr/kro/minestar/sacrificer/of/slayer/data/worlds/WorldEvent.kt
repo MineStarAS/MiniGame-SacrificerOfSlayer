@@ -12,13 +12,9 @@ import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
-
+//TODO: 테스트 해야함
 interface WorldEvent: Listener {
     val world: World
-
-    /**
-     * Creature function
-     */
 
     val creatureMap : HashMap<Player, PlayerCreature>
     fun addCreature(creature: PlayerCreature): Boolean {
@@ -71,19 +67,6 @@ interface WorldEvent: Listener {
     }
 
     @EventHandler
-    fun slayerDamaged(e: EntityDamageEvent) {
-        if (e.entity.world != world) return
-        if (e.entity !is Player) return
-
-        val player = e.entity as Player
-        val playerCreature = getCreature(player) ?: return
-        if (playerCreature.creature !is Slayer) return
-
-        if (e.cause != EntityDamageEvent.DamageCause.FALL) return
-        e.damage = 1.0
-    }
-
-    @EventHandler
     fun death(e: PlayerDeathEvent) {
         if (e.player.world != world) return
         val player = e.player
@@ -93,16 +76,21 @@ interface WorldEvent: Listener {
         if (player.location.y < -64) player.teleport(world.spawnLocation)
     }
 
-    /**
-     * Passive trigger event
-     */
     @EventHandler
-    fun damagedPassive(e: EntityDamageEvent) {
+    fun damaged(e: EntityDamageEvent) {
         if (e.entity.world != world) return
         if (e.entity !is Player) return
 
         val player = e.entity as Player
         val playerCreature = getCreature(player) ?: return
         playerCreature.passiveActivation(e)
+
+        if (playerCreature.creature is Slayer) {
+            if (e.cause == EntityDamageEvent.DamageCause.FALL) {
+                e.isCancelled = true
+                return
+            }
+            playerCreature.removeHealth(e.damage)
+        }
     }
 }

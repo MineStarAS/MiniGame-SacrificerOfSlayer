@@ -3,7 +3,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.player
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Creature
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.TickPassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.number.round
 import org.bukkit.entity.Player
@@ -11,7 +11,7 @@ import org.bukkit.event.Event
 import org.bukkit.event.player.PlayerInteractEvent
 
 @Suppress("DEPRECATION")
-class PlayerCreature(val player: Player, private val worldData: WorldData, val creature: Creature) {
+class PlayerCreature(val player: Player, val worldData: WorldData, val creature: Creature) {
     companion object {
         internal fun randomSlayer(player: Player, worldData: WorldData): PlayerCreature {
             val creature = Slayer.values().random()
@@ -38,6 +38,29 @@ class PlayerCreature(val player: Player, private val worldData: WorldData, val c
         else "§9Sacrificer"
 
         player.sendTitle(creatureType, "§7당신의 역할은 §e${creature.displayName} §7입니다")
+    }
+
+    /**
+     * Health function
+     */
+    private var maxHealth = 0.0
+    fun maxHealth() = maxHealth
+
+    private var health = maxHealth
+    fun health() = health
+
+    fun addHealth(double: Double) {
+        if (double <= 0) return
+        this.health += health
+        if (health > maxHealth) health = maxHealth
+        player.health = health / maxHealth * 20
+    }
+
+    fun removeHealth(double: Double) {
+        if (double <= 0) return
+        health -= double
+        if (health < 0) health = 0.0
+        player.health = health / maxHealth * 20
     }
 
     /**

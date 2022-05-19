@@ -1,6 +1,4 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill
-
-import org.bukkit.event.Event
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces
 
 interface Skill {
     val name: String

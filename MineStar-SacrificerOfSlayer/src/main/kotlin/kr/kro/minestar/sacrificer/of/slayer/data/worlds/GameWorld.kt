@@ -34,9 +34,6 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         gameReady()
     }
 
-    private fun allPlayers() = Bukkit.getOnlinePlayers()
-    private fun worldPlayers() = world.players
-
     val team = Bukkit.getScoreboardManager().mainScoreboard.getTeam("player")
         ?: Bukkit.getScoreboardManager().mainScoreboard.registerNewTeam("player").apply {
             setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER)
@@ -138,28 +135,6 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         tickTaskCancel()
         WorldClass.finishGame(this)
     }
-
-
-    /**
-     * Event function
-     */
-    @EventHandler
-    override fun attack(e: EntityDamageByEntityEvent) = super.attack(e)
-
-    @EventHandler
-    override fun active(e: PlayerSwapHandItemsEvent) = super.active(e)
-
-    @EventHandler
-    override fun useTool(e: PlayerInteractEvent) = super.useTool(e)
-
-    @EventHandler
-    override fun slayerDamaged(e: EntityDamageEvent) = super.slayerDamaged(e)
-
-    @EventHandler
-    override fun death(e: PlayerDeathEvent) = super.death(e)
-
-    @EventHandler
-    override fun damagedPassive(e: EntityDamageEvent) = super.damagedPassive(e)
 
     /**
      * Lock event

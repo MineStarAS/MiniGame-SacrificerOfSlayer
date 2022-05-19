@@ -1,12 +1,10 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.weapon
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool.JumpBomb
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.JumpBomb
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
-import kr.kro.minestar.utility.sound.PlaySound
 import org.bukkit.Material
 import org.bukkit.Particle
-import org.bukkit.Sound
-import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.util.Vector

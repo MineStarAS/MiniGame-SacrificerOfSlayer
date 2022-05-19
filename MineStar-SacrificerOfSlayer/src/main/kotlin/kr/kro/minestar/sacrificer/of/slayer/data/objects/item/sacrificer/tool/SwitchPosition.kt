@@ -1,6 +1,7 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.tool
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Tool
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
 import kr.kro.minestar.utility.location.offset
 import kr.kro.minestar.utility.sound.PlaySound
 import org.bukkit.GameMode
