@@ -8,6 +8,7 @@ import org.bukkit.Material
 import org.bukkit.Particle
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityShootBowEvent
 import org.bukkit.util.Vector
 
 object Bow : RangedWeapon() {
@@ -18,6 +19,9 @@ object Bow : RangedWeapon() {
     override val hitEffect: List<String> = listOf()
     override val killEffect: List<String> = listOf()
 
+    override fun shootEffect(e: EntityShootBowEvent) {
+
+    }
 
     override fun hitEffect(e: EntityDamageByEntityEvent) {
     }

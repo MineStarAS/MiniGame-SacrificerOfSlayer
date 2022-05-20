@@ -6,8 +6,13 @@ import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldEvent
 import org.bukkit.entity.Player
 import org.bukkit.entity.Projectile
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityShootBowEvent
 
 abstract class RangedWeapon : Weapon() {
+
+
+    abstract fun shootEffect(e: EntityShootBowEvent)
+
     override fun hit(e: EntityDamageByEntityEvent, worldEvent: WorldEvent) {
         e.isCancelled = true
 

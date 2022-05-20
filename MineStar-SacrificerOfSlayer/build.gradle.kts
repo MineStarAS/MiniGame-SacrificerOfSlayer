@@ -18,11 +18,12 @@ tasks {
         archiveBaseName.set(project.name)
         archiveClassifier.set("")
         archiveVersion.set(project.version.toString())
+        archivePath.delete()
         doLast {
             // jar file copy
             copy {
                 from(archiveFile)
-                into(if (File(plugins, archiveFileName.get()).exists()) plugins else plugins)
+                into(plugins)
             }
         }
     }

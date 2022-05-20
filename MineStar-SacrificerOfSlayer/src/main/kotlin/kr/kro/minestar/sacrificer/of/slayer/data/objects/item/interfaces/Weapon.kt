@@ -2,12 +2,11 @@
 
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
 
-import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldEvent
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
-import org.bukkit.GameMode
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityShootBowEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 

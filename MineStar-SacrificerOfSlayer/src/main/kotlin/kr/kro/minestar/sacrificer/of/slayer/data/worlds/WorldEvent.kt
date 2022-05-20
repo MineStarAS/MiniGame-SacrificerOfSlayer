@@ -3,6 +3,8 @@ package kr.kro.minestar.sacrificer.of.slayer.data.worlds
 import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.bossbar.SlayerHealthBar
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.RangedWeapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
 import org.bukkit.Bukkit
 import org.bukkit.EntityEffect
@@ -14,6 +16,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityShootBowEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
@@ -62,9 +65,20 @@ interface WorldEvent : Listener {
     }
 
     @EventHandler
+    fun shoot(e: EntityShootBowEvent) {
+        if (e.entity.world != world) return
+        if (e.entity !is Player) return
+
+        val player = e.entity as Player
+        val playerCreature = getCreature(player) ?: return
+        val weapon = playerCreature.creature.weapon ?: return
+        if (weapon !is RangedWeapon) return
+        weapon.shootEffect(e)
+    }
+
+    @EventHandler
     fun active(e: PlayerSwapHandItemsEvent) {
         if (e.player.world != world) return
-        if (e.player.gameMode != GameMode.ADVENTURE) return
         e.isCancelled = true
 
         val player = e.player
@@ -76,7 +90,6 @@ interface WorldEvent : Listener {
     @EventHandler
     fun useTool(e: PlayerInteractEvent) {
         if (e.player.world != world) return
-        if (e.player.gameMode != GameMode.ADVENTURE) return
         if (!e.action.isRightClick) return
         val player = e.player
         val playerCreature = getCreature(player) ?: return
@@ -93,6 +106,9 @@ interface WorldEvent : Listener {
         if (player.location.y < -64) player.teleport(world.spawnLocation)
     }
 
+    /**
+     * Passive trigger event
+     */
     @EventHandler
     fun damaged(e: EntityDamageEvent) {
         if (e.entity.world != world) return
