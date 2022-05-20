@@ -1,5 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.JumpBomb
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
@@ -9,7 +10,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.util.Vector
 
-object BlastHammer : Weapon() {
+object BlastHammer : MeleeWeapon() {
 
     override val material: Material = Material.IRON_AXE
     override val displayName: String = "폭발 망치"

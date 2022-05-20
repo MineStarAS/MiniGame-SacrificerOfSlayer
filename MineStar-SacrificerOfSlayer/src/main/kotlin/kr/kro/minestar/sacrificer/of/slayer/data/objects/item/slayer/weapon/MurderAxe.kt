@@ -1,5 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -7,7 +8,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-object MurderAxe : Weapon() {
+object MurderAxe : MeleeWeapon() {
 
     override val material: Material = Material.IRON_AXE
     override val displayName: String = "살인 도끼"

@@ -2,6 +2,8 @@
 
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
 
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldEvent
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import org.bukkit.GameMode
 import org.bukkit.entity.Player
@@ -15,32 +17,12 @@ abstract class Weapon : Item {
     protected abstract val hitEffect: List<String>
     protected abstract val killEffect: List<String>
 
-    fun hit(e: EntityDamageByEntityEvent) {
-        e.isCancelled = true
+    abstract fun hit(e: EntityDamageByEntityEvent, worldEvent: WorldEvent)
 
-        val target = e.entity
-        val attacker = e.damager
-
-        if (target !is Player) return
-        if (attacker !is Player) return
-
-        val weaponItem = attacker.inventory.itemInMainHand
-
-        if (!isSameItem(weaponItem)) return
-
-        val damage = (e.damager as Player).attackCooldown * damage
-        if ((e.entity as Player).health <= damage) killEffect(e)
-        e.damage = damage
-        e.isCancelled = false
-        hitEffect(e)
-    }
-
-    protected open fun hitEffect(e: EntityDamageByEntityEvent) {
-    }
+    protected abstract fun hitEffect(e: EntityDamageByEntityEvent)
 
     protected open fun killEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
-        target.gameMode = GameMode.SPECTATOR
         SoundClass.playerDeath.play(target.location)
         SoundClass.criticalHit.play(target.location)
     }

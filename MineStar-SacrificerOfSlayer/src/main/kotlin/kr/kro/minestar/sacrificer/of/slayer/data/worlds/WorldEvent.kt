@@ -1,10 +1,15 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.worlds
 
+import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
+import kr.kro.minestar.sacrificer.of.slayer.data.bossbar.SlayerHealthBar
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import org.bukkit.Bukkit
+import org.bukkit.EntityEffect
 import org.bukkit.GameMode
 import org.bukkit.World
 import org.bukkit.entity.Player
+import org.bukkit.entity.Projectile
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -12,11 +17,11 @@ import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
-//TODO: 테스트 해야함
-interface WorldEvent: Listener {
+
+interface WorldEvent : Listener {
     val world: World
 
-    val creatureMap : HashMap<Player, PlayerCreature>
+    val creatureMap: HashMap<Player, PlayerCreature>
     fun addCreature(creature: PlayerCreature): Boolean {
         if (this is GameWorld) if (creatureMap.contains(creature.player)) return false
         creatureMap[creature.player] = creature
@@ -25,6 +30,7 @@ interface WorldEvent: Listener {
 
     fun getCreature(player: Player) = creatureMap[player]
     fun getCreatures() = creatureMap.values
+    fun sacrificerAmount() = creatureMap.size - 1
 
     /**
      * Event function
@@ -37,11 +43,22 @@ interface WorldEvent: Listener {
         val target = e.entity
         val attacker = e.damager
 
-        if (target !is Player || attacker !is Player) return
+        if (target !is Player) return
 
-        val playerCreature = getCreature(attacker) ?: return
-        val creature = playerCreature.creature
-        creature.weapon?.hit(e)
+        when (attacker) {
+            is Player -> {
+                val playerCreature = getCreature(attacker) ?: return
+                val creature = playerCreature.creature
+                creature.weapon?.hit(e, this)
+            }
+            is Projectile -> {
+                val shooter = attacker.shooter ?: return
+                if (shooter !is Player) return
+                val playerCreature = getCreature(shooter) ?: return
+                val creature = playerCreature.creature
+                creature.weapon?.hit(e, this)
+            }
+        }
     }
 
     @EventHandler
@@ -80,17 +97,23 @@ interface WorldEvent: Listener {
     fun damaged(e: EntityDamageEvent) {
         if (e.entity.world != world) return
         if (e.entity !is Player) return
+        if (e.isCancelled) return
 
         val player = e.entity as Player
         val playerCreature = getCreature(player) ?: return
         playerCreature.passiveActivation(e)
 
-        if (playerCreature.creature is Slayer) {
-            if (e.cause == EntityDamageEvent.DamageCause.FALL) {
+        Bukkit.getScheduler().runTask(pl, Runnable {
+            if (playerCreature.creature is Slayer) {
+                if (e.cause == EntityDamageEvent.DamageCause.FALL) {
+                    e.isCancelled = true
+                    return@Runnable
+                }
+                playerCreature.removeHealth(e.damage)
+                SlayerHealthBar(playerCreature)
                 e.isCancelled = true
-                return
+                player.playEffect(EntityEffect.HURT)
             }
-            playerCreature.removeHealth(e.damage)
-        }
+        })
     }
 }

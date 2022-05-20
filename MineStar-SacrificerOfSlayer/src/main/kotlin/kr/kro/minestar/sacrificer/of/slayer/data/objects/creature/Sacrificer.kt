@@ -1,9 +1,10 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.creature
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.MasterKey
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.SwitchPosition
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.MasterKey
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.SwitchPosition
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon.Bow
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.PassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive.IronArmor
@@ -24,7 +25,7 @@ enum class Sacrificer : Creature {
 
     constructor(displayName: String) {
         this.displayName = displayName
-        this.weapon = null
+        this.weapon = Bow
         this.activeSkill = null
         this.passiveSkill = null
         this.tool = null
@@ -40,7 +41,7 @@ enum class Sacrificer : Creature {
 
     constructor(displayName: String, activeSkill: ActiveSkill) {
         this.displayName = displayName
-        this.weapon = null
+        this.weapon = Bow
         this.activeSkill = activeSkill
         this.passiveSkill = null
         this.tool = null
@@ -48,7 +49,7 @@ enum class Sacrificer : Creature {
 
     constructor(displayName: String, passiveSkill: PassiveSkill) {
         this.displayName = displayName
-        this.weapon = null
+        this.weapon = Bow
         this.activeSkill = null
         this.passiveSkill = passiveSkill
         this.tool = null
@@ -56,7 +57,7 @@ enum class Sacrificer : Creature {
 
     constructor(displayName: String, tool: Tool) {
         this.displayName = displayName
-        this.weapon = null
+        this.weapon = Bow
         this.activeSkill = null
         this.passiveSkill = null
         this.tool = tool
@@ -64,7 +65,7 @@ enum class Sacrificer : Creature {
 
     constructor(displayName: String, weapon: Weapon?, activeSkill: ActiveSkill?, passiveSkill: PassiveSkill?, tool: Tool?) {
         this.displayName = displayName
-        this.weapon = weapon
+        this.weapon = weapon ?: Bow
         this.activeSkill = activeSkill
         this.passiveSkill = passiveSkill
         this.tool = tool

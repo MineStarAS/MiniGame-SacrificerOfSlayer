@@ -1,23 +1,13 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.worlds
 
 import kr.kro.minestar.sacrificer.of.slayer.Main
-import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.bossbar.SlayerHealthBar
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
-import kr.kro.minestar.utility.event.enable
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
 import org.bukkit.World
 import org.bukkit.entity.Player
-import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDamageEvent
-import org.bukkit.event.entity.PlayerDeathEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerSwapHandItemsEvent
 import org.bukkit.scheduler.BukkitTask
 import java.io.File
 
@@ -28,10 +18,10 @@ abstract class WorldData(final override val world: World) : WorldEvent {
 
     private fun startLocation() = world.spawnLocation.clone()
 
-    var slayerHealthBar: SlayerHealthBar? = null
-
     fun allPlayers(): MutableCollection<out Player> = Bukkit.getOnlinePlayers()
     fun worldPlayers(): MutableList<Player> = world.players
+
+    var slayerHealthBar: SlayerHealthBar? = null
 
     /**
      * Creature function

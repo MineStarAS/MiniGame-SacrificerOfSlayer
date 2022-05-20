@@ -1,5 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.TestSubjectBlood
 import org.bukkit.Material
@@ -8,7 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
-object DangerousSyringe : Weapon() {
+object DangerousSyringe : MeleeWeapon() {
 
     override val material: Material = Material.IRON_SWORD
     override val displayName: String = "위험한 주사기"

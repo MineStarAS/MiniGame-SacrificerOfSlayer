@@ -43,7 +43,10 @@ class PlayerCreature(val player: Player, val worldData: WorldData, val creature:
     /**
      * Health function
      */
-    private var maxHealth = 0.0
+    private var maxHealth = if (creature is Slayer)
+        creature.baseMaxHealth.toDouble() + (creature.extraMaxHealth * worldData.sacrificerAmount())
+    else 0.0
+
     fun maxHealth() = maxHealth
 
     private var health = maxHealth

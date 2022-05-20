@@ -10,20 +10,19 @@ import org.bukkit.boss.BarStyle
 class SlayerHealthBar(val playerCreature: PlayerCreature) {
     private val bar = Bukkit.createBossBar("", BarColor.BLUE, BarStyle.SEGMENTED_10).apply {
         if (playerCreature.creature !is Slayer) return@apply
-        if (playerCreature.worldData.slayerHealthBar != null) {
-            playerCreature.worldData.slayerHealthBar?.disable()
-        }
+        if (playerCreature.worldData.slayerHealthBar != null) playerCreature.worldData.slayerHealthBar?.disable()
 
         val percent = if (playerCreature.health() < 0) 0.0
         else if (playerCreature.health() > playerCreature.maxHealth()) 1.0
         else playerCreature.health() / playerCreature.maxHealth()
 
         progress = percent
-        setTitle("§e${playerCreature.player.name} §c[${playerCreature.health()}/${playerCreature.maxHealth()}]")
+        setTitle("§e${playerCreature.player.name} §c[${playerCreature.health().toInt()}/${playerCreature.maxHealth().toInt()}]")
 
         for (player in playerCreature.worldData.worldPlayers()) addPlayer(player)
         isVisible = true
 
+        playerCreature.worldData.slayerHealthBar = this@SlayerHealthBar
         Bukkit.getScheduler().runTaskLater(pl, Runnable { disable() }, 20 * 3)
     }
 
