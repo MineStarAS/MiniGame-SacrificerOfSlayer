@@ -5,10 +5,9 @@ import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
-abstract class ActiveSkill : Skill {
+abstract class ActiveSkill : Skill() {
     protected abstract val coolTime: Int
     abstract val startCoolTime: Int
-    protected abstract val duration: Int
 
     fun useActiveSkill(playerData: PlayerData, worldData: WorldData) {
         playerData.resetActiveCoolTime(coolTime)

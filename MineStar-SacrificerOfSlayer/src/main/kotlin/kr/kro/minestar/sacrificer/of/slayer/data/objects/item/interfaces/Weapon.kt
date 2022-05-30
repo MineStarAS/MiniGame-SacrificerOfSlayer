@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.ItemStack
 
-abstract class Weapon : Item {
+abstract class Weapon : Item() {
     abstract override val displayName: String
     protected abstract val damage: Double
     protected abstract val hitEffect: List<String>

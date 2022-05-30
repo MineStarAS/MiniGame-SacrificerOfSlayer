@@ -18,7 +18,7 @@ object SlayerStep : TickPassiveSkill() {
 
     override fun effect(playerData: PlayerData, worldData: WorldData, e: Event?) {
         if (!canEffectActivation(playerData)) return
-        for (creature in worldData.getCreatures())
+        for (creature in worldData.getPlayerDataList())
             if (creature.creature is Slayer)
                 slayerStep.play(playerData.player, creature.player.location)
     }

@@ -5,6 +5,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.Active
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import kr.kro.minestar.utility.location.look
 import kr.kro.minestar.utility.location.offset
 import kr.kro.minestar.utility.scheduler.Scheduler
@@ -16,7 +17,6 @@ import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 import org.bukkit.entity.Player
-import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 object ThrowDagger : ActiveSkill() {
@@ -28,7 +28,6 @@ object ThrowDagger : ActiveSkill() {
     )
     override val coolTime = 20 * 20
     override val startCoolTime = coolTime
-    override val duration = 20 * 5
     override val skillType = SkillType.ATTACK
 
     override fun activeEffect(playerData: PlayerData, worldData: WorldData) {
@@ -47,7 +46,7 @@ object ThrowDagger : ActiveSkill() {
                     if (targets.toTypedArray().isNotEmpty())
                         for (target in targets) if (target != player)
                             if (target.gameMode != GameMode.SPECTATOR) {
-                                target.addPotionEffect(PotionEffect(PotionEffectType.POISON, duration, 1, false, false, true))
+                                target.addPotionEffect(PotionEffectType.POISON.effect(5, 1))
                                 break
                             }
                 }

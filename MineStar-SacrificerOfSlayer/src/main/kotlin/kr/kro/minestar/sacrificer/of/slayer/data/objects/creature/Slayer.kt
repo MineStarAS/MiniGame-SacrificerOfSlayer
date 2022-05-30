@@ -12,6 +12,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.Active
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.PassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.Dash
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.ImpactGrenade
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.ParalysisGasGrenade
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.ThrowDagger
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.BangBangBomb
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Chase
@@ -31,8 +32,12 @@ enum class Slayer : Creature {
         130
     ),
     MADDEST_DOCTOR(
-        "미치광이 의사", DangerousSyringe, ImpactGrenade, BangBangBomb, TestSubjectBlood,
+        "미치광이 의사", DangerousSyringe, ParalysisGasGrenade, BangBangBomb, TestSubjectBlood,
         120
+    ),
+    SHADOW(
+        "그림자", DangerousSyringe, ImpactGrenade, BangBangBomb, TestSubjectBlood,
+        100
     ),
     ;
 

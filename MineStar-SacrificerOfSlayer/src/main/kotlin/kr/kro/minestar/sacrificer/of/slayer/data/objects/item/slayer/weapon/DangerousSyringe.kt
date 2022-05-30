@@ -1,12 +1,11 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.TestSubjectBlood
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 object DangerousSyringe : MeleeWeapon() {
@@ -21,12 +20,8 @@ object DangerousSyringe : MeleeWeapon() {
     override fun hitEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         val attacker = e.damager as Player
-        target.addPotionEffect(
-            PotionEffect(PotionEffectType.SLOW, 20 * 3, 1, false, false, true)
-        )
-        target.addPotionEffect(
-            PotionEffect(PotionEffectType.BLINDNESS, 20 * 3, 1, false, false, true)
-        )
+        target.addPotionEffect(PotionEffectType.SLOW.effect(3, 1))
+        target.addPotionEffect(PotionEffectType.BLINDNESS.effect(3, 1))
     }
 
     override fun killEffect(e: EntityDamageByEntityEvent) {

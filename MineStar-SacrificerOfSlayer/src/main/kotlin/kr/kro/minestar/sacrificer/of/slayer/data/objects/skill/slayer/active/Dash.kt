@@ -14,7 +14,6 @@ object Dash : ActiveSkill() {
     )
     override val coolTime = 20 * 10
     override val startCoolTime = coolTime
-    override val duration = 20 * 0
     override val skillType = SkillType.MOVEMENT
 
     override fun activeEffect(playerData: PlayerData, worldData: WorldData) {

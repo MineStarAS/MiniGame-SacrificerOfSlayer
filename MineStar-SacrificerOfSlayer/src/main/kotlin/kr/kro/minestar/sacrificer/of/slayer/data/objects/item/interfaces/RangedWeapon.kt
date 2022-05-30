@@ -21,10 +21,10 @@ abstract class RangedWeapon : Weapon() {
         if (e.entity !is Player) return
 
         val attacker = (e.damager as Projectile).shooter as Player
-        val attackerData = worldEvent.getCreature(attacker) ?: return
+        val attackerData = worldEvent.getPlayerData(attacker) ?: return
 
         val target = e.entity as Player
-        val targetCreature = worldEvent.getCreature(target) ?: return
+        val targetCreature = worldEvent.getPlayerData(target) ?: return
 
         if (attackerData.creature is Slayer && targetCreature.creature is Slayer) return
         if (attackerData.creature is Sacrificer && targetCreature.creature is Sacrificer) return

@@ -9,7 +9,7 @@ import org.bukkit.SoundCategory
 import org.bukkit.block.data.type.Door
 import org.bukkit.event.player.PlayerInteractEvent
 
-object MasterKey : Tool {
+object MasterKey : Tool() {
 
     override var material: Material = Material.NETHERITE_SCRAP
     override var displayName: String = "마스터 키"

@@ -6,7 +6,7 @@ import org.bukkit.Material
 import org.bukkit.event.Event
 import org.bukkit.inventory.ItemStack
 
-abstract class PassiveSkill : Skill {
+abstract class PassiveSkill : Skill() {
 
     fun getItem(): ItemStack {
         val item = ItemStack(Material.GOLD_INGOT)

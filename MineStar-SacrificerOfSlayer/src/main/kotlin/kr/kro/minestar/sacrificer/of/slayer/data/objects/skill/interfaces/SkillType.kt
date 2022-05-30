@@ -6,6 +6,5 @@ enum class SkillType {
     ATTACK,//공격
     DEFENSE,//방어
     DISTURBING,//방해
-    SALVATION,//구원
     SEARCH//감지 및 탐지
 }

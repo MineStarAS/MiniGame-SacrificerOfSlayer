@@ -9,10 +9,10 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 
-interface Tool : Item {
-    val skillType: SkillType
-    val description: List<String>
-    var amount: Int
+abstract class Tool : Item() {
+    abstract val skillType: SkillType
+    abstract val description: List<String>
+    abstract var amount: Int
 
     fun use(e: PlayerInteractEvent) {
         if (e.hand != EquipmentSlot.HAND) return
@@ -20,7 +20,7 @@ interface Tool : Item {
         if (isSameItem(item)) if(used(e)) --item.amount
     }
 
-    fun used(e: PlayerInteractEvent): Boolean
+    abstract fun used(e: PlayerInteractEvent): Boolean
 
     override fun getItem(): ItemStack {
         val item = material.item().display("§f[§cTOOL§f] $displayName").amount(amount)

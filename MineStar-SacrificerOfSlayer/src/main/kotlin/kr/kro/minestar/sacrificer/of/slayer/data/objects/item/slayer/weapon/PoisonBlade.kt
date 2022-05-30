@@ -1,11 +1,10 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 object PoisonBlade : MeleeWeapon() {
@@ -20,13 +19,13 @@ object PoisonBlade : MeleeWeapon() {
     override fun hitEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         val attacker = e.damager as Player
-        target.addPotionEffect(PotionEffect(PotionEffectType.POISON, 20 * 5, 0, false, false, true))
+        target.addPotionEffect(PotionEffectType.POISON.effect(5, 0))
         target.location.direction = attacker.location.subtract(target.location).toVector()
     }
 
     override fun killEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         val attacker = e.damager as Player
-        attacker.addPotionEffect(PotionEffect(PotionEffectType.INVISIBILITY, 20 * 5, 0, false, false, true))
+        attacker.addPotionEffect(PotionEffectType.INVISIBILITY.effect(5, 0))
     }
 }

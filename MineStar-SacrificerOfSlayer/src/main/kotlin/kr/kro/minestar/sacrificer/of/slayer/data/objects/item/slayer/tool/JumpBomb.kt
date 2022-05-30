@@ -9,7 +9,7 @@ import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.util.Vector
 
-object JumpBomb : Tool {
+object JumpBomb : Tool() {
 
     override var material: Material = Material.NETHERITE_SCRAP
     override var displayName: String = "점프 폭탄"

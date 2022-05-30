@@ -1,9 +1,9 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces
 
-interface Skill {
-    val name: String
-    val description: MutableList<String>
-    val skillType: SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.ObjectClass
 
-    fun className() = javaClass.simpleName ?: ""
+abstract class Skill : ObjectClass() {
+    abstract val name: String
+    abstract val description: MutableList<String>
+    abstract val skillType: SkillType
 }

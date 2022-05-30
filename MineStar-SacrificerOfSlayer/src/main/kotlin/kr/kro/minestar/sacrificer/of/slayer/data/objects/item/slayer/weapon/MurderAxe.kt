@@ -1,11 +1,10 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 object MurderAxe : MeleeWeapon() {
@@ -20,12 +19,12 @@ object MurderAxe : MeleeWeapon() {
     override fun hitEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         val attacker = e.damager as Player
-        target.addPotionEffect(PotionEffect(PotionEffectType.SLOW, 20 * 3, 0, false, false, true))
+        target.addPotionEffect(PotionEffectType.SLOW.effect(3, 0))
     }
 
     override fun killEffect(e: EntityDamageByEntityEvent) {
         val target = e.entity as Player
         val attacker = e.damager as Player
-        attacker.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 20 * 5, 2, false, false, true))
+        attacker.addPotionEffect(PotionEffectType.SPEED.effect(5, 2))
     }
 }

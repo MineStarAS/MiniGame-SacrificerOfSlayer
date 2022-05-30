@@ -12,7 +12,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.Action
 import org.bukkit.event.player.PlayerInteractEvent
 
-object SwitchPosition : Tool, Listener {
+object SwitchPosition : Tool(), Listener {
 
     override var material: Material = Material.NETHERITE_SCRAP
     override var displayName: String = "위치 교환 장치"

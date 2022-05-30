@@ -4,9 +4,9 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillT
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import org.bukkit.event.Event
-import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 
 object BangBangBomb : TickPassiveSkill() {
@@ -22,6 +22,6 @@ object BangBangBomb : TickPassiveSkill() {
         val player = playerData.player
         val soundDistance = SoundClass.minExplodeDistance(player.location) ?: return
         if (soundDistance > 30) return
-        player.addPotionEffect(PotionEffect(PotionEffectType.SPEED, 20 * 5, 2, false, false, true))
+        player.addPotionEffect(PotionEffectType.SPEED.effect(5,2))
     }
 }
