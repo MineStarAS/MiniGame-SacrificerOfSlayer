@@ -3,24 +3,27 @@ package kr.kro.minestar.sacrificer.of.slayer.data.player
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Creature
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.RangedWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.utility.material.item
 import kr.kro.minestar.utility.number.round
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.Event
 import org.bukkit.event.player.PlayerInteractEvent
 
 @Suppress("DEPRECATION")
-class PlayerCreature(val player: Player, val worldData: WorldData, val creature: Creature) {
+class PlayerData(val player: Player, val worldData: WorldData, val creature: Creature) {
     companion object {
-        internal fun randomSlayer(player: Player, worldData: WorldData): PlayerCreature {
+        internal fun randomSlayer(player: Player, worldData: WorldData): PlayerData {
             val creature = Slayer.values().random()
-            return PlayerCreature(player, worldData, creature)
+            return PlayerData(player, worldData, creature)
         }
 
-        internal fun randomSacrificer(player: Player, worldData: WorldData): PlayerCreature {
+        internal fun randomSacrificer(player: Player, worldData: WorldData): PlayerData {
             val creature = Sacrificer.values().random()
-            return PlayerCreature(player, worldData, creature)
+            return PlayerData(player, worldData, creature)
         }
     }
 
@@ -33,6 +36,7 @@ class PlayerCreature(val player: Player, val worldData: WorldData, val creature:
         inventory.setItem(1, creature.activeSkill?.getItem())
         inventory.setItem(2, creature.passiveSkill?.getItem())
         inventory.setItem(3, creature.tool?.getItem())
+        if (creature.weapon is RangedWeapon) inventory.setItem(9, Material.ARROW.item())
 
         val creatureType = if (creature is Slayer) "§cSlayer"
         else "§9Sacrificer"
@@ -44,7 +48,7 @@ class PlayerCreature(val player: Player, val worldData: WorldData, val creature:
      * Health function
      */
     private var maxHealth = if (creature is Slayer)
-        creature.baseMaxHealth.toDouble() + (creature.extraMaxHealth * worldData.sacrificerAmount())
+        creature.maxHealth + (creature.maxHealth * (0.3 * worldData.sacrificerAmount()))
     else 0.0
 
     fun maxHealth() = maxHealth

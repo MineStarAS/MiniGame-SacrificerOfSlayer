@@ -3,7 +3,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passi
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.TickPassiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.sound.PlaySound
 import org.bukkit.Sound
@@ -16,11 +16,11 @@ object SlayerStep : TickPassiveSkill() {
     override val skillType: SkillType = SkillType.SEARCH
     override val period = 20
 
-    override fun effect(playerCreature: PlayerCreature, worldData: WorldData, e: Event?) {
-        if (!canEffectActivation(playerCreature)) return
+    override fun effect(playerData: PlayerData, worldData: WorldData, e: Event?) {
+        if (!canEffectActivation(playerData)) return
         for (creature in worldData.getCreatures())
             if (creature.creature is Slayer)
-                slayerStep.play(playerCreature.player, creature.player.location)
+                slayerStep.play(playerData.player, creature.player.location)
     }
 
     private val slayerStep = PlaySound().apply {

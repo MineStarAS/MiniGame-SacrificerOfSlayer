@@ -25,20 +25,6 @@ object AlwaysEvent : Listener {
     }
 
     @EventHandler
-    fun projectileHit(e: ProjectileHitEvent) {
-        val projectile = e.entity
-        val location = projectile.location
-
-        when (projectile.customName) {
-            ImpactGrenade.codeName() -> {
-                location.world.createExplosion(location, ImpactGrenade.power, false)
-                location.world.spawnParticle(Particle.EXPLOSION_HUGE, location, 10, 1.0, 1.0, 1.0)
-                SoundClass.explode(location, 1.0F)
-            }
-        }
-    }
-
-    @EventHandler
     fun blockExplodeLock(e: BlockExplodeEvent) {
         e.isCancelled = true
     }

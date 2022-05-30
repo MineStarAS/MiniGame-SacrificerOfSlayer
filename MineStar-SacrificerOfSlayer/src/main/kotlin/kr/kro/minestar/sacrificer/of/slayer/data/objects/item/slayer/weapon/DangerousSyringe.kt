@@ -13,9 +13,9 @@ object DangerousSyringe : MeleeWeapon() {
 
     override val material: Material = Material.IRON_SWORD
     override val displayName: String = "위험한 주사기"
-    override val damage: Double = 4.0
-    override val hitEffect: List<String> = listOf("대상이 3초간 '구속I','약화I'를 받습니다.")
-    override val killEffect: List<String> = listOf("'폭발 부스터'를 얻습니다")
+    override val damage: Double = 3.0
+    override val hitEffect: List<String> = listOf("대상이 3초간 '구속I','실명'을 받습니다")
+    override val killEffect: List<String> = listOf("'실험체의 피'를 얻습니다")
 
 
     override fun hitEffect(e: EntityDamageByEntityEvent) {
@@ -25,9 +25,8 @@ object DangerousSyringe : MeleeWeapon() {
             PotionEffect(PotionEffectType.SLOW, 20 * 3, 1, false, false, true)
         )
         target.addPotionEffect(
-            PotionEffect(PotionEffectType.CONFUSION, 20 * 3, 1, false, false, true)
+            PotionEffect(PotionEffectType.BLINDNESS, 20 * 3, 1, false, false, true)
         )
-
     }
 
     override fun killEffect(e: EntityDamageByEntityEvent) {

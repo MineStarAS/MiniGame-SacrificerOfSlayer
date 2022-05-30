@@ -1,6 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces
 
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import org.bukkit.Material
 import org.bukkit.event.Event
@@ -19,7 +19,7 @@ abstract class PassiveSkill : Skill {
         return item
     }
 
-    abstract fun effectActivation(playerCreature: PlayerCreature, worldData: WorldData, e: Event?)
+    abstract fun effectActivation(playerData: PlayerData, worldData: WorldData, e: Event?)
 
-    protected abstract fun effect(playerCreature: PlayerCreature, worldData: WorldData, e: Event?)
+    protected abstract fun effect(playerData: PlayerData, worldData: WorldData, e: Event?)
 }

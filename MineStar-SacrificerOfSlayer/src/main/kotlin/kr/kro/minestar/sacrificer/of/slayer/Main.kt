@@ -16,7 +16,7 @@ class Main : JavaPlugin() {
     override fun onEnable() {
         pl = this
         logger.info("$prefix §aEnable")
-        getCommand("sofs")?.setExecutor(Command)
+        getCommand("ss")?.setExecutor(Command)
 
 
         WorldClass.reloadEnable()

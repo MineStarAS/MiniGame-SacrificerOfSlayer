@@ -2,7 +2,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passi
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.DamagedPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.sound.PlaySound
 import org.bukkit.Sound
@@ -15,7 +15,7 @@ object IronArmor : DamagedPassiveSkill() {
     override val description = mutableListOf("모든 데미지를 50% 적게 받습니다.")
     override val skillType = SkillType.DEFENSE
 
-    override fun effect(playerCreature: PlayerCreature, worldData: WorldData, e: Event?) {
+    override fun effect(playerData: PlayerData, worldData: WorldData, e: Event?) {
         if (e !is EntityDamageEvent) return
         e.damage = e.damage / 2
         defensingSound.play(e.entity.location)

@@ -2,9 +2,8 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
-import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import kr.kro.minestar.utility.location.offset
 import org.bukkit.entity.ShulkerBullet
 
@@ -22,11 +21,11 @@ object ImpactGrenade : ActiveSkill() {
         "충격 수류탄을 던집니다",
     )
 
-    override fun activeEffect(playerCreature: PlayerCreature, worldData: WorldData) {
-        val player = playerCreature.player
+    override fun activeEffect(playerData: PlayerData, worldData: WorldData) {
+        val player = playerData.player
         val grenade = player.world.spawn(player.eyeLocation.offset(1), ShulkerBullet::class.java)
         grenade.shooter = player
-        grenade.customName = codeName()
+        grenade.customName = className()
         val vector = player.eyeLocation.direction.multiply(1.0)
         grenade.velocity = vector
     }

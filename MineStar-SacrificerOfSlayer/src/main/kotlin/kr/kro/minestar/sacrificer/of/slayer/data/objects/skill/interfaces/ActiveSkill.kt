@@ -1,6 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces
 
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
@@ -10,12 +10,12 @@ abstract class ActiveSkill : Skill {
     abstract val startCoolTime: Int
     protected abstract val duration: Int
 
-    fun useActiveSkill(playerCreature: PlayerCreature, worldData: WorldData) {
-        playerCreature.resetActiveCoolTime(coolTime)
-        activeEffect(playerCreature, worldData)
+    fun useActiveSkill(playerData: PlayerData, worldData: WorldData) {
+        playerData.resetActiveCoolTime(coolTime)
+        activeEffect(playerData, worldData)
     }
 
-    protected abstract fun activeEffect(playerCreature: PlayerCreature, worldData: WorldData)
+    protected abstract fun activeEffect(playerData: PlayerData, worldData: WorldData)
 
     fun getItem(): ItemStack {
         val item = ItemStack(Material.IRON_INGOT)

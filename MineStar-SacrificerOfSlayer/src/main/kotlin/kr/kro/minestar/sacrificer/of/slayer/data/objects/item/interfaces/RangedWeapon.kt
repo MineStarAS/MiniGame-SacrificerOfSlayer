@@ -10,6 +10,7 @@ import org.bukkit.event.entity.EntityShootBowEvent
 
 abstract class RangedWeapon : Weapon() {
 
+    abstract val shootEffect: List<String>
 
     abstract fun shootEffect(e: EntityShootBowEvent)
 
@@ -20,19 +21,20 @@ abstract class RangedWeapon : Weapon() {
         if (e.entity !is Player) return
 
         val attacker = (e.damager as Projectile).shooter as Player
-        val attackerCreature = worldEvent.getCreature(attacker) ?: return
+        val attackerData = worldEvent.getCreature(attacker) ?: return
 
         val target = e.entity as Player
         val targetCreature = worldEvent.getCreature(target) ?: return
 
-        if (attackerCreature.creature is Slayer && targetCreature.creature is Slayer) return
-        if (attackerCreature.creature is Sacrificer && targetCreature.creature is Sacrificer) return
+        if (attackerData.creature is Slayer && targetCreature.creature is Slayer) return
+        if (attackerData.creature is Sacrificer && targetCreature.creature is Sacrificer) return
 
         val weaponItem = attacker.inventory.itemInMainHand
 
         if (!isSameItem(weaponItem)) return
 
-        val damage = this.damage
+        val force = e.damager.customName?.toDoubleOrNull() ?: 1.0
+        val damage = this.damage * force
         if ((e.entity as Player).health <= damage) killEffect(e)
         e.damage = damage
         e.isCancelled = false

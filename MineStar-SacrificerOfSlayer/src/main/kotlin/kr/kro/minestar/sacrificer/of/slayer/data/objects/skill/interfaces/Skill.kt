@@ -5,5 +5,5 @@ interface Skill {
     val description: MutableList<String>
     val skillType: SkillType
 
-    fun codeName() = this.javaClass.simpleName ?: "NullSkill"
+    fun className() = javaClass.simpleName ?: ""
 }

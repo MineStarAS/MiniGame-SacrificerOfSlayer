@@ -3,7 +3,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.worlds
 import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
 import kr.kro.minestar.utility.event.disable
@@ -17,12 +17,7 @@ import org.bukkit.GameMode
 import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDamageEvent
-import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerGameModeChangeEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerSwapHandItemsEvent
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.scoreboard.Team
@@ -62,7 +57,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
                         false, false, true))
         })
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 5, 16, 0, -1))
-        while (countDown >= 0) {
+        while (countDown > 0) {
             --countDown
             scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 0, 21, 0, -1))
         }
@@ -84,8 +79,8 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
 
         for (player in livePlayer) {
             player.inventory.heldItemSlot = 4
-            val creature = if (player == livePlayer.first()) PlayerCreature.randomSlayer(player, this)
-            else PlayerCreature.randomSacrificer(player, this)
+            val creature = if (player == livePlayer.first()) PlayerData.randomSlayer(player, this)
+            else PlayerData.randomSacrificer(player, this)
             addCreature(creature)
         }
     }
@@ -110,6 +105,8 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
     }
 
     private fun slayerWin() {
+        if (finish) return
+        finish = true
         val scheduler = Scheduler(pl)
         scheduler.addRun(RunNow { SoundClass.slayerWinMusic(worldPlayers()) })
         scheduler.addRun(RunTitle(worldPlayers(), "§cSlayer", "§eWon", 5, 40, 5, 15))
@@ -120,8 +117,15 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
     }
 
     private fun sacrificerWin() {
-        SoundClass.slayerWinMusic(worldPlayers())
-        gameFinishing()
+        if (finish) return
+        finish = true
+        val scheduler = Scheduler(pl)
+        scheduler.addRun(RunNow { SoundClass.slayerWinMusic(worldPlayers()) })
+        scheduler.addRun(RunTitle(worldPlayers(), "§9Sacrificer", "§eWon", 5, 40, 5, 15))
+        scheduler.addRun(RunTitle(worldPlayers(), " ", "§a잠시 후 오버월드로 이동합니다", 5, 50, 5, 20 * 3))
+        scheduler.addRun(RunNow { gameFinishing() })
+
+        scheduler.play()
     }
 
     private fun gameFinishing() {
@@ -142,8 +146,9 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
     @EventHandler
     private fun changeGameModeLock(e: PlayerGameModeChangeEvent) {
         if (e.player.world != world) return
+        e.isCancelled = true
         if (e.newGameMode == GameMode.SURVIVAL) return
         if (e.newGameMode == GameMode.CREATIVE) return
-        e.isCancelled = true
+        e.isCancelled = false
     }
 }

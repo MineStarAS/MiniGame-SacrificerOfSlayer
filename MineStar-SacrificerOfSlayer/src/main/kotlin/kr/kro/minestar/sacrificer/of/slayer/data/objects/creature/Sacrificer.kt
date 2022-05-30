@@ -4,6 +4,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.MasterKey
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.SwitchPosition
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon.TripleShotBow
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon.Bow
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.PassiveSkill
@@ -15,6 +16,7 @@ enum class Sacrificer : Creature {
     LISTENER("리스너", SlayerStep),
     EXCHANGER("익스체인저", SwitchPosition),
     IRON_KNIGHT("아이언 나이트", IronArmor),
+    ARCHER("아처", TripleShotBow),
     ;
 
     override val displayName: String

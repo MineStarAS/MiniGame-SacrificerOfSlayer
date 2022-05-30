@@ -14,7 +14,7 @@ object BlastHammer : MeleeWeapon() {
 
     override val material: Material = Material.IRON_AXE
     override val displayName: String = "폭발 망치"
-    override val damage: Double = 7.0
+    override val damage: Double = 11.0
     override val hitEffect: List<String> = listOf("대상이 폭발하며 날아갑니다")
     override val killEffect: List<String> = listOf("'폭발 부스터'를 얻습니다")
 

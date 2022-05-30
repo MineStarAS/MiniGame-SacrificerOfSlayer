@@ -12,7 +12,7 @@ object MurderAxe : MeleeWeapon() {
 
     override val material: Material = Material.IRON_AXE
     override val displayName: String = "살인 도끼"
-    override val damage: Double = 12.0
+    override val damage: Double = 8.0
     override val hitEffect: List<String> = listOf("대상에게 '구속 I'을 3초 부여 합니다")
     override val killEffect: List<String> = listOf("'신속 III'을 5초간 받습니다")
 

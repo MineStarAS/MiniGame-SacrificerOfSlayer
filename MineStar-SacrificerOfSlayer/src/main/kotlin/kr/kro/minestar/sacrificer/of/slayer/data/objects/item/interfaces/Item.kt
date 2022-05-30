@@ -11,4 +11,6 @@ interface Item {
     fun getItem() : ItemStack
 
     fun isSameItem(item: ItemStack) = getItem().isSameItem(item)
+
+    fun className() = javaClass.simpleName ?: ""
 }

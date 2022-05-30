@@ -2,7 +2,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.worlds
 
 import kr.kro.minestar.sacrificer.of.slayer.Main
 import kr.kro.minestar.sacrificer.of.slayer.data.bossbar.SlayerHealthBar
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
 import org.bukkit.Bukkit
 import org.bukkit.GameMode
@@ -26,7 +26,7 @@ abstract class WorldData(final override val world: World) : WorldEvent {
     /**
      * Creature function
      */
-    override val creatureMap = hashMapOf<Player, PlayerCreature>()
+    override val creatureMap = hashMapOf<Player, PlayerData>()
 
     /**
      * Task function

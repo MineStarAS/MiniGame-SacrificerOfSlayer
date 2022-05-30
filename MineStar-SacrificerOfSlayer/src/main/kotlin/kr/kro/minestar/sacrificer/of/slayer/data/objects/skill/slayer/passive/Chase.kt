@@ -2,7 +2,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.TickPassiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerCreature
+import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.location.offset
 import org.bukkit.GameMode
@@ -20,8 +20,8 @@ object Chase : TickPassiveSkill() {
     override val skillType = SkillType.MOVEMENT
     override val period = 0
 
-    override fun effect(playerCreature: PlayerCreature, worldData: WorldData, e: Event?) {
-        val player = playerCreature.player
+    override fun effect(playerData: PlayerData, worldData: WorldData, e: Event?) {
+        val player = playerData.player
         var distance = 0.0
         val location = player.eyeLocation
         while (true) {
