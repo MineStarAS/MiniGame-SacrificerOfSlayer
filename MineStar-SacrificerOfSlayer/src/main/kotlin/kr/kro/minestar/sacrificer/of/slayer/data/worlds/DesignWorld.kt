@@ -32,12 +32,12 @@ class DesignWorld(world: World) : WorldData(world) {
     fun setSlayer(player: Player, slayer: Slayer?) {
         val playerData = if (slayer != null) PlayerData(player, this, slayer)
         else PlayerData.randomSlayer(player, this)
-        addCreature(playerData)
+        addPlayerData(playerData)
     }
     fun setSacrificer(player: Player, sacrificer: Sacrificer?) {
         val playerData = if (sacrificer != null) PlayerData(player, this, sacrificer)
         else PlayerData.randomSacrificer(player, this)
-        addCreature(playerData)
+        addPlayerData(playerData)
     }
 
     /**

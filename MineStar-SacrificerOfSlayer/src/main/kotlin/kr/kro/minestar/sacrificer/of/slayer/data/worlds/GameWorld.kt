@@ -4,6 +4,7 @@ import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
 import kr.kro.minestar.utility.event.disable
@@ -18,7 +19,6 @@ import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerGameModeChangeEvent
-import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType
 import org.bukkit.scoreboard.Team
 
@@ -50,12 +50,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c${WorldClass.readUnicode(worldName).removeUnderBar()}", 5, 60, 5, 20))
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c30초 후 각자의 역할이 지정됩니다", 5, 40, 5, 20))
         var countDown = 3
-        scheduler.addRun(RunNow {
-            for (player in worldPlayers())
-                player.addPotionEffect(
-                    PotionEffect(PotionEffectType.SPEED, 20 * countDown, 2,
-                        false, false, true))
-        })
+        scheduler.addRun(RunNow { for (player in worldPlayers()) player.addPotionEffect(PotionEffectType.SPEED.effect(countDown, 2)) })
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 5, 16, 0, -1))
         while (countDown > 0) {
             --countDown
@@ -81,7 +76,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
             player.inventory.heldItemSlot = 4
             val creature = if (player == livePlayer.first()) PlayerData.randomSlayer(player, this)
             else PlayerData.randomSacrificer(player, this)
-            addCreature(creature)
+            addPlayerData(creature)
         }
     }
 
@@ -93,7 +88,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
     fun checkFinish() {
         var slayer = 0
         var sacrificer = 0
-        for (creature in creatureMap.values) {
+        for (creature in playerDataMap.values) {
             if (!creature.player.isOnline) continue
             if (creature.player.world != world) continue
             if (creature.player.gameMode != GameMode.ADVENTURE) continue

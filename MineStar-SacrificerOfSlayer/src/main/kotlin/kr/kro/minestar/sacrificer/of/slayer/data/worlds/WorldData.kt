@@ -14,6 +14,16 @@ import java.io.File
 @Suppress("DEPRECATION")
 abstract class WorldData(final override val world: World) : WorldEvent {
 
+    companion object {
+        private val map = hashMapOf<World, WorldData>()
+
+        fun get(world: World) = map[world]
+    }
+
+    init {
+        map[world] = this
+    }
+
     protected var folder = File("${WorldClass.worldFolder}/${world.name}")
 
     private fun startLocation() = world.spawnLocation.clone()
@@ -26,7 +36,7 @@ abstract class WorldData(final override val world: World) : WorldEvent {
     /**
      * Creature function
      */
-    override val creatureMap = hashMapOf<Player, PlayerData>()
+    override val playerDataMap = hashMapOf<Player, PlayerData>()
 
     /**
      * Task function
@@ -35,7 +45,7 @@ abstract class WorldData(final override val world: World) : WorldEvent {
     protected fun tickTaskRun() {
         tickTaskCancel()
         tickTask = Bukkit.getScheduler().runTaskTimer(Main.pl, Runnable {
-            for (creature in creatureMap.values) {
+            for (creature in playerDataMap.values) {
                 if (creature.player.gameMode == GameMode.SPECTATOR) continue
                 creature.removeActiveCoolTime()
                 creature.passiveActivation(null)
