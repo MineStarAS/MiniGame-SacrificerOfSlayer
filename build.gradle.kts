@@ -35,7 +35,8 @@ subprojects {
         compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 
         //MineStar
-        implementation("com.github.MineStarAS:Utility-API:1.0.0")
+//        implementation("com.github.MineStarAS:Utility-API:1.0.0")
+        implementation(files("C:\\Users\\MineStar\\Desktop\\MC Server folder\\libs\\Utility-API-1.0.1.jar"))
 
         //other
         // https://mvnrepository.com/artifact/commons-io/commons-io
