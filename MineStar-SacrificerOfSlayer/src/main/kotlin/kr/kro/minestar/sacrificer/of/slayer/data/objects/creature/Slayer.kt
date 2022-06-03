@@ -17,6 +17,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.Thr
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.BangBangBomb
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Chase
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Hide
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.InterestingSubject
 
 enum class Slayer : Creature {
     SLAUGHTERER(
@@ -32,7 +33,7 @@ enum class Slayer : Creature {
         40
     ),
     MADDEST_DOCTOR(
-        "미치광이 의사", DangerousSyringe, ParalysisGasGrenade, BangBangBomb, TestSubjectBlood,
+        "미치광이 의사", DangerousSyringe, ParalysisGasGrenade, InterestingSubject, TestSubjectBlood,
         60
     ),
     SHADOW(

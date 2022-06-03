@@ -5,6 +5,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.active
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.sacrificer.of.slayer.functions.ParticleClass
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import kr.kro.minestar.utility.location.offset
 import org.bukkit.Particle
@@ -37,7 +38,7 @@ object ImpactGrenade : ActiveSkill(), Grenade {
         val projectile = e.entity
         val location = projectile.location
         location.world.createExplosion(location, power, false)
-        location.world.spawnParticle(Particle.EXPLOSION_HUGE, location, 10, 1.0, 1.0, 1.0)
+        ParticleClass.explode(10, 1.0)
         SoundClass.explode(location, 1.0F)
     }
 }

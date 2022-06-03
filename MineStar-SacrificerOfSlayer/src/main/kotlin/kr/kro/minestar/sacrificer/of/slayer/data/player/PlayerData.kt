@@ -6,6 +6,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.RangedWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passive.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.utility.item.amount
 import kr.kro.minestar.utility.material.item
 import kr.kro.minestar.utility.number.round
 import org.bukkit.Material
@@ -35,7 +36,7 @@ class PlayerData(val player: Player, val worldData: WorldData, val creature: Cre
         inventory.setItem(0, creature.weapon?.getItem())
         inventory.setItem(1, creature.activeSkill?.getItem())
         inventory.setItem(2, creature.passiveSkill?.getItem())
-        inventory.setItem(3, creature.tool?.getItem())
+        inventory.setItem(3, creature.tool?.getItem()?.amount(creature.tool?.amount ?: 0))
         if (creature.weapon is RangedWeapon) inventory.setItem(9, Material.ARROW.item())
 
         val creatureType = if (creature is Slayer) "§cSlayer"

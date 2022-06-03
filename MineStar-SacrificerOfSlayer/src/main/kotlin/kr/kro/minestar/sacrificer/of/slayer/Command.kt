@@ -3,6 +3,7 @@ package kr.kro.minestar.sacrificer.of.slayer
 import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.prefix
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
+import kr.kro.minestar.sacrificer.of.slayer.functions.ParticleClass
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
 import kr.kro.minestar.utility.command.Argument
 import kr.kro.minestar.utility.command.FunctionalCommand
@@ -37,6 +38,7 @@ object Command : FunctionalCommand {
 
         when (arg) {
             OpArg.test -> {
+                ParticleClass.explode(1, 0.0).play(player.location)
             }
             OpArg.creature -> {
                 val target = if (args.lastIndex == 3) Bukkit.getPlayer(args.last())

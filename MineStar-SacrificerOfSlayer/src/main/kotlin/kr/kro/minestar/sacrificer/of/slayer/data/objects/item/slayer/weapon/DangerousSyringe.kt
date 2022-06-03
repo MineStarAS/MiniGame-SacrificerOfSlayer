@@ -15,7 +15,7 @@ object DangerousSyringe : MeleeWeapon() {
     override val displayName: String = "위험한 주사기"
     override val damage: Double = 3.5
     override val hitEffect: List<String> = listOf(
-        "대상이 3초간 '신속I','독I'을 받습니다"
+        "대상이 3초간 '신속I', '독I'을 받습니다"
     )
     override val killEffect: List<String> = listOf("'실험체의 피'를 얻습니다")
 

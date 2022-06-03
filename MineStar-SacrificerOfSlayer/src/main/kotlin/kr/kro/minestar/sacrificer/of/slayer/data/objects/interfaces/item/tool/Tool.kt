@@ -24,7 +24,7 @@ abstract class Tool : Item() {
     abstract fun used(e: PlayerInteractEvent): Boolean
 
     override fun getItem(): ItemStack {
-        val item = material.item().display("§f[§cTOOL§f] $displayName").amount(amount)
+        val item = material.item().display("§f[§cTOOL§f] $displayName")
         for (s in description) item.addLore("§f§7$s")
         return item
     }

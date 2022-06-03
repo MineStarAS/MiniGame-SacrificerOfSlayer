@@ -4,20 +4,22 @@ import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.bossbar.SlayerHealthBar
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.RangedWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.Grenade
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.RangedWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
-import org.bukkit.*
-import org.bukkit.entity.Arrow
-import org.bukkit.entity.Player
-import org.bukkit.entity.Projectile
-import org.bukkit.entity.ShulkerBullet
+import kr.kro.minestar.utility.string.toServer
+import org.bukkit.Bukkit
+import org.bukkit.EntityEffect
+import org.bukkit.GameMode
+import org.bukkit.World
+import org.bukkit.entity.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.*
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
+import org.bukkit.potion.PotionEffectType
 
 interface WorldEvent : Listener {
     val world: World
@@ -61,11 +63,19 @@ interface WorldEvent : Listener {
         if (target !is Player) return
         val targetData = getPlayerData(target) ?: return
 
+        fun potionEffectDamageCalculate(livingEntity: LivingEntity) {
+            val strengthLevel = (livingEntity.getPotionEffect(PotionEffectType.INCREASE_DAMAGE)?.amplifier)?.plus(1) ?: 0
+            val weaknessLevel = livingEntity.getPotionEffect(PotionEffectType.WEAKNESS)?.amplifier?.plus(1) ?: 0
+
+            e.damage = e.damage + strengthLevel - weaknessLevel
+        }
+
         when (attacker) {
             is Player -> {
                 val attackerData = getPlayerData(attacker) ?: return
                 val creature = attackerData.creature
                 creature.weapon?.hit(e, this)
+                potionEffectDamageCalculate(attacker)
             }
             is Projectile -> when (attacker) {
                 is Arrow -> {
@@ -75,11 +85,14 @@ interface WorldEvent : Listener {
                     val creature = attackerData.creature
                     creature.weapon?.hit(e, this)
                     target.arrowsInBody = 0
+                    potionEffectDamageCalculate(shooter)
                 }
 
                 is ShulkerBullet -> {}
             }
         }
+
+
         if (liveSacrificerAmount() <= 2)
             if (targetData.creature is Slayer) e.damage = e.damage * 2.5
     }
@@ -163,17 +176,12 @@ interface WorldEvent : Listener {
         val playerData = getPlayerData(player) ?: return
         playerData.passiveActivation(e)
 
-        Bukkit.getScheduler().runTask(pl, Runnable {
-            if (playerData.creature is Slayer) {
-                if (e.cause == EntityDamageEvent.DamageCause.FALL) {
-                    e.isCancelled = true
-                    return@Runnable
-                }
-                playerData.removeHealth(e.damage)
-                SlayerHealthBar(playerData)
-                e.isCancelled = true
-                player.playEffect(EntityEffect.HURT)
-            }
-        })
+        if (playerData.creature is Slayer) {
+            if (e.cause == EntityDamageEvent.DamageCause.FALL) e.damage = 0.0
+            playerData.removeHealth(e.damage)
+            SlayerHealthBar(playerData)
+            e.isCancelled = true
+            player.playEffect(EntityEffect.HURT)
+        }
     }
 }

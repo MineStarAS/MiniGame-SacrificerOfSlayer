@@ -4,6 +4,7 @@ import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.utility.location.Axis
 import kr.kro.minestar.utility.location.addAxis
 import kr.kro.minestar.utility.sound.PlaySound
+import kr.kro.minestar.sacrificer.of.slayer.data.worlds.GameWorld
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Sound
@@ -46,10 +47,15 @@ object SoundClass {
         Bukkit.getScheduler().runTaskLater(pl, Runnable { explodeSet.remove(location) }, 3)
     }
 
-    /**
-     * Game sound
-     */
+    val drink = PlaySound().apply {
+        soundCategory = SoundCategory.RECORDS
+        sound = Sound.ITEM_HONEY_BOTTLE_DRINK
+        pitch = 0.8F
+    }
 
+    /**
+     * [GameWorld] sound
+     */
     val gameWorldEnter = PlaySound().apply {
         soundCategory = SoundCategory.RECORDS
         sound = Sound.ENTITY_WITHER_SPAWN

@@ -115,7 +115,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         if (finish) return
         finish = true
         val scheduler = Scheduler(pl)
-        scheduler.addRun(RunNow { SoundClass.slayerWinMusic(worldPlayers()) })
+        scheduler.addRun(RunNow { SoundClass.sacrificerWinMusic(worldPlayers()) })
         scheduler.addRun(RunTitle(worldPlayers(), "§9Sacrificer", "§eWon", 5, 40, 5, 15))
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§a잠시 후 오버월드로 이동합니다", 5, 50, 5, 20 * 3))
         scheduler.addRun(RunNow { gameFinishing() })

@@ -5,9 +5,12 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Creature
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
+import kr.kro.minestar.utility.item.addLore
 import kr.kro.minestar.utility.location.look
 import kr.kro.minestar.utility.location.offset
+import kr.kro.minestar.utility.number.round
 import kr.kro.minestar.utility.particle.ParticleData
+import kr.kro.minestar.utility.string.toServer
 import org.bukkit.*
 import org.bukkit.block.BlockFace
 import org.bukkit.event.block.Action
@@ -16,7 +19,7 @@ import org.bukkit.scheduler.BukkitTask
 
 abstract class Trap(particleColor: Color) : Tool() {
     companion object {
-        val locationSet = hashSetOf<Location>()
+        private val locationSet = hashSetOf<Location>()
         fun addLocation(location: Location) = locationSet.add(location.toBlockLocation())
         fun removeLocation(location: Location) = locationSet.remove(location.toBlockLocation())
     }
@@ -24,7 +27,9 @@ abstract class Trap(particleColor: Color) : Tool() {
     abstract val enableDelay: Long
     abstract val detectRadius: Double
 
-    private val particleData = ParticleData().colorData(particleColor, 0.5F)
+    private val particleData = ParticleData().colorData(particleColor, 0.2F)
+
+    override fun getItem() = super.getItem().addLore(" ").addLore("§f§7감지 반경 : ${detectRadius.round(2)} 블럭")
 
     private fun BlockFace.toLocation(world: World) = Location(world, modX.toDouble(), modY.toDouble(), modZ.toDouble())
 
@@ -60,22 +65,20 @@ abstract class Trap(particleColor: Color) : Tool() {
             if (setterCreature is Slayer && playerCreature is Slayer) continue
             if (setterCreature is Sacrificer && playerCreature is Sacrificer) continue
 
-            val loc = location.clone().look(player.location)
-            var distance = 0.0
-            var isNotBlocking = true
-            while (true) {
-                if (distance > detectRadius) break
-                val offsetLocation = loc.clone().offset(distance)
-                distance += 0.1
-                if (offsetLocation.block.type != Material.AIR) {
-                    isNotBlocking = false
-                    break
+            fun check(loc: Location): Boolean {
+                var distance = 0.0
+                while (true) {
+                    if (distance > detectRadius) break
+                    val offsetLocation = loc.clone().offset(distance)
+                    distance += 0.1
+                    if (offsetLocation.block.type != Material.AIR) break
+                    if (offsetLocation.getNearbyPlayers(0.0).contains(player)) return true
                 }
-                val players = offsetLocation.getNearbyPlayers(0.0)
-                if (players.contains(player)) continue
-                else break
+                return false
             }
-            return isNotBlocking
+
+            if (check(location.clone().look(player.location))) return true
+            if (check(location.clone().look(player.eyeLocation))) return true
         }
         return false
     }
