@@ -1,6 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.MeleeWeapon
 import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import org.bukkit.Material
 import org.bukkit.entity.Player

@@ -52,7 +52,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         var countDown = 3
         scheduler.addRun(RunNow { for (player in worldPlayers()) player.addPotionEffect(PotionEffectType.SPEED.effect(countDown, 2)) })
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 5, 16, 0, -1))
-        while (countDown > 0) {
+        while (countDown > 1) {
             --countDown
             scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 0, 21, 0, -1))
         }
@@ -62,7 +62,6 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
     }
 
     private fun gameStart() {
-        val scheduler = Scheduler(pl)
         setCreature()
         tickTaskRun()
     }
@@ -128,6 +127,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         for (player in worldPlayers()) {
             player.gameMode = GameMode.ADVENTURE
             for (potionEffect in player.activePotionEffects) player.removePotionEffect(potionEffect.type)
+            player.inventory.clear()
             player.teleport(world.spawnLocation)
         }
         disable()

@@ -3,8 +3,8 @@ package kr.kro.minestar.sacrificer.of.slayer.data.player
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Creature
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.RangedWeapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.TickPassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.RangedWeapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passive.TickPassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.material.item
 import kr.kro.minestar.utility.number.round

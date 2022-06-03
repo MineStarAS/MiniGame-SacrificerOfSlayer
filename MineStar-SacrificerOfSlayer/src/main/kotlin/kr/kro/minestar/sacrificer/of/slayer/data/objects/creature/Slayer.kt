@@ -1,15 +1,15 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.creature
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Tool
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.tool.Tool
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.Weapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.JumpBomb
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.TestSubjectBlood
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon.BlastHammer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon.DangerousSyringe
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon.MurderAxe
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon.PoisonBlade
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.PassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.active.ActiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passive.PassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.Dash
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.ImpactGrenade
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active.ParalysisGasGrenade
@@ -21,23 +21,23 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.passive.Hi
 enum class Slayer : Creature {
     SLAUGHTERER(
         "도살자", MurderAxe, Dash, Chase,
-        150
+        50
     ),
     ASSASSIN(
         "암살자", PoisonBlade, ThrowDagger, Hide,
-        100
+        40
     ),
     BLAST_MANIAC(
         "폭파광", BlastHammer, ImpactGrenade, BangBangBomb, JumpBomb,
-        130
+        40
     ),
     MADDEST_DOCTOR(
         "미치광이 의사", DangerousSyringe, ParalysisGasGrenade, BangBangBomb, TestSubjectBlood,
-        120
+        60
     ),
     SHADOW(
         "그림자", DangerousSyringe, ImpactGrenade, BangBangBomb, TestSubjectBlood,
-        100
+        70
     ),
     ;
 

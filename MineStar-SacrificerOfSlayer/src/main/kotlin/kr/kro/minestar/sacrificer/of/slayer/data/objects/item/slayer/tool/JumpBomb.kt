@@ -1,7 +1,7 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Tool
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.tool.Tool
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -16,7 +16,7 @@ object JumpBomb : Tool() {
     override val description: List<String> = listOf(
         "폭발을 이르켜 앞으로 점프 합니다"
     )
-    override var amount: Int = 2
+    override var amount: Int = 0
 
     override val skillType: SkillType = SkillType.MOVEMENT
 

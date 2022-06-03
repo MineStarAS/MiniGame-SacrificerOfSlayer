@@ -1,4 +1,4 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passive
 
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData

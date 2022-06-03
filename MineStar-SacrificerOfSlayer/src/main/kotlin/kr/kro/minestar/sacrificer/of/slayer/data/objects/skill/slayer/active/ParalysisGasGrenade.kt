@@ -1,10 +1,10 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.slayer.active
 
 import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.Grenade
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.Grenade
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.active.ActiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
@@ -27,7 +27,7 @@ object ParalysisGasGrenade : ActiveSkill(), Grenade {
 
     override val description = mutableListOf(
         "가스탄을 던져 15초간 유지되는 가스 구름을 생성합니다",
-        "가스 구름 안에 있는 세크리파이서는 '구속 III'과 '점프불가'를 받습니다",
+        "가스 구름 안에 있는 세크리파이서는 '구속 III'를 받습니다",
     )
 
     override fun activeEffect(playerData: PlayerData, worldData: WorldData) {
@@ -60,7 +60,6 @@ object ParalysisGasGrenade : ActiveSkill(), Grenade {
                 val data = worldData.getPlayerData(player) ?: continue
                 if (data.creature is Slayer) continue
                 player.addPotionEffect(PotionEffectType.SLOW.effect(1, 2))
-                player.addPotionEffect(PotionEffectType.JUMP.effect(1, 127))
             }
         }
 

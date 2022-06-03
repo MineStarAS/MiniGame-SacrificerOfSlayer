@@ -1,10 +1,9 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.creature
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.ObjectClass
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Tool
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.PassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.tool.Tool
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.active.ActiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passive.PassiveSkill
 
 interface Creature {
     val displayName: String

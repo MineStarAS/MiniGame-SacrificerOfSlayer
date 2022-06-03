@@ -1,6 +1,6 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.ObjectClass
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.ObjectClass
 import kr.kro.minestar.utility.item.isSameItem
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack

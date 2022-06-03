@@ -1,7 +1,7 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.DamagedPassiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passive.DamagedPassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.utility.sound.PlaySound

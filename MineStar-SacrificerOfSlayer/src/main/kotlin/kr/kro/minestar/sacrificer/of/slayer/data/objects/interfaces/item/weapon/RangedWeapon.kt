@@ -1,4 +1,4 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer

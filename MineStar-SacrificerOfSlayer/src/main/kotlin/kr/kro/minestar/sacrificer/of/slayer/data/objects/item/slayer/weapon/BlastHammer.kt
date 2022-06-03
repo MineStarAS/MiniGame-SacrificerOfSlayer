@@ -1,7 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.weapon
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.MeleeWeapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.MeleeWeapon
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.JumpBomb
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import org.bukkit.Material
@@ -24,8 +23,8 @@ object BlastHammer : MeleeWeapon() {
         val attacker = e.damager as Player
         val x = attacker.location.direction.x
         val z = attacker.location.direction.z
-        val vector = Vector(x, 0.0, z).normalize()
-        target.velocity = vector.multiply(2.5).setY(3.0)
+        val vector = Vector(x, 0.0, z).multiply(2.5).setY(1.0)
+        target.velocity = vector
         SoundClass.explode(target.location, 1.0F)
         target.world.spawnParticle(Particle.EXPLOSION_LARGE, target.location, 5, 0.4, 0.0, 0.4, 0.0)
     }

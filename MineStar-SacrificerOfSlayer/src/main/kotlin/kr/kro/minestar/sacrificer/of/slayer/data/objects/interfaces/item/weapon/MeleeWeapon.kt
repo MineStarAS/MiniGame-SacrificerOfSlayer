@@ -1,6 +1,5 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon
 
-import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldEvent
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent

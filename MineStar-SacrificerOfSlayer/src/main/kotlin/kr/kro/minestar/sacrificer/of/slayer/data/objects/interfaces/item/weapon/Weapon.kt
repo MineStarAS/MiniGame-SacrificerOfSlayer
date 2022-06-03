@@ -1,7 +1,8 @@
 @file:Suppress("DEPRECATION")
 
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon
 
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.Item
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldEvent
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
 import kr.kro.minestar.utility.item.flagAll

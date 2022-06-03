@@ -1,17 +1,19 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.creature
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Tool
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.tool.Tool
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.Weapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.active.ActiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passive.PassiveSkill
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.MasterKey
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.SwitchPosition
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon.TripleShotBow
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool.TestTrap
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon.Bow
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.ActiveSkill
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.PassiveSkill
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon.TripleShotBow
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive.IronArmor
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.sacrificer.passive.SlayerStep
 
 enum class Sacrificer : Creature {
+    TESTER("실험체", TestTrap),
     KEY_MASTER("열쇠공", MasterKey),
     LISTENER("리스너", SlayerStep),
     EXCHANGER("익스체인저", SwitchPosition),

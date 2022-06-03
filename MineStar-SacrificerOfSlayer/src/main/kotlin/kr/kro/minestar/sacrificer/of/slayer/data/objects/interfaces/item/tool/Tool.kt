@@ -1,6 +1,7 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.tool
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.Item
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillType
 import kr.kro.minestar.utility.item.addLore
 import kr.kro.minestar.utility.item.amount
 import kr.kro.minestar.utility.item.display
@@ -14,7 +15,7 @@ abstract class Tool : Item() {
     abstract val description: List<String>
     abstract var amount: Int
 
-    fun use(e: PlayerInteractEvent) {
+    open fun use(e: PlayerInteractEvent) {
         if (e.hand != EquipmentSlot.HAND) return
         val item = e.player.inventory.itemInMainHand
         if (isSameItem(item)) if(used(e)) --item.amount

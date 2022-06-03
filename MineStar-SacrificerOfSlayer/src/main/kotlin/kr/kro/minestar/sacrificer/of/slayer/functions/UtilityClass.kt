@@ -8,6 +8,10 @@ internal object UtilityClass {
     /**
      * Potion function
      */
-    fun PotionEffectType.effect(sec: Int, level: Int) = PotionEffect(this, 20 * sec, level, false, false, true)
+    fun PotionEffectType.effect(secOrTick: Int, level: Int): PotionEffect {
+        return if (secOrTick >= 0) PotionEffect(this, 20 * secOrTick, level, false, false, true)
+        else PotionEffect(this, -secOrTick, level, false, false, true)
+    }
+
 }
 

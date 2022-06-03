@@ -1,4 +1,4 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces
 
 abstract class ObjectClass {
 

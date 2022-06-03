@@ -1,15 +1,9 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.RangedWeapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.Weapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool.JumpBomb
-import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.RangedWeapon
 import org.bukkit.Material
-import org.bukkit.Particle
-import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityShootBowEvent
-import org.bukkit.util.Vector
 
 object Bow : RangedWeapon() {
 

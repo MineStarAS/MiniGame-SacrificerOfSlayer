@@ -1,6 +1,6 @@
 package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.weapon
 
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.RangedWeapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.RangedWeapon
 import kr.kro.minestar.utility.location.Axis
 import kr.kro.minestar.utility.location.addAxis
 import kr.kro.minestar.utility.location.offset

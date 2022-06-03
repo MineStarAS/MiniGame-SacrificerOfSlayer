@@ -4,8 +4,8 @@ import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.bossbar.SlayerHealthBar
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.item.interfaces.RangedWeapon
-import kr.kro.minestar.sacrificer.of.slayer.data.objects.Grenade
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.weapon.RangedWeapon
+import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.Grenade
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import org.bukkit.*
 import org.bukkit.entity.Arrow
@@ -81,7 +81,7 @@ interface WorldEvent : Listener {
             }
         }
         if (liveSacrificerAmount() <= 2)
-            if (targetData.creature is Slayer) e.damage = e.damage * 2
+            if (targetData.creature is Slayer) e.damage = e.damage * 2.5
     }
 
     @EventHandler

@@ -1,4 +1,4 @@
-package kr.kro.minestar.sacrificer.of.slayer.data.objects.skill.interfaces
+package kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill
 
 enum class SkillType {
     MOVEMENT,//이동
