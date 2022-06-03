@@ -2,7 +2,6 @@ package kr.kro.minestar.sacrificer.of.slayer
 
 import kr.kro.minestar.sacrificer.of.slayer.functions.AlwaysEvent
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
-import kr.kro.minestar.utility.event.enable
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.io.File
@@ -23,7 +22,7 @@ class Main : JavaPlugin() {
 
         if (!isReload()) {
             createReloadCheckFile()
-            WorldClass.deleteRacingWorlds()
+            WorldClass.deleteGameWorlds()
         }
 
         AlwaysEvent

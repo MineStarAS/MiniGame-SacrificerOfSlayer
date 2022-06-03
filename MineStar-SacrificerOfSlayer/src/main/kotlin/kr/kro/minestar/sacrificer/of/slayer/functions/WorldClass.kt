@@ -77,19 +77,19 @@ object WorldClass {
         return DesignWorld(world)
     }
 
-    internal fun enableRacingWorld(worldName: String): GameWorld? {
+    internal fun enableGameWorld(worldName: String): GameWorld? {
         if (isGamingNow()) return null
         val worldFolder = File("$worldFolder/$worldName")
         if (!isWorldFolder(worldFolder)) return null
 
         File(worldFolder, "uid.dat").delete()
 
-        val racingWorldName = "racingWorld-${date()}"
-        val cloneFolder = File(serverFolder(), racingWorldName).apply { mkdir() }
+        val gameWorldName = "gameWorld-${date()}"
+        val cloneFolder = File(serverFolder(), gameWorldName).apply { mkdir() }
 
         fileCopy(worldFolder, cloneFolder)
 
-        val world = WorldCreator(racingWorldName).createWorld() ?: return null
+        val world = WorldCreator(gameWorldName).createWorld() ?: return null
         return GameWorld(world, worldName)
     }
 
@@ -102,11 +102,11 @@ object WorldClass {
         }
     }
 
-    internal fun deleteRacingWorlds() {
+    internal fun deleteGameWorlds() {
         val serverFileList = serverFolder().listFiles()
         for (file in serverFileList) {
             if (!file.isDirectory) continue
-            if (!file.name.contains("racingWorld")) continue
+            if (!file.name.contains("gameWorld")) continue
             FileUtils.forceDelete(file)
         }
     }

@@ -100,7 +100,7 @@ object Command : FunctionalCommand {
 
             OpArg.start -> {
                 val worldName = WorldClass.convertUnicode(args.last())
-                WorldClass.enableRacingWorld(worldName) ?: "$prefix §c존재하지 않는 월드이거나 레이싱이 진행 중입니다.".toPlayer(player)
+                WorldClass.enableGameWorld(worldName) ?: "$prefix §c존재하지 않는 월드이거나 게임이 진행 중입니다.".toPlayer(player)
             }
         }
         return

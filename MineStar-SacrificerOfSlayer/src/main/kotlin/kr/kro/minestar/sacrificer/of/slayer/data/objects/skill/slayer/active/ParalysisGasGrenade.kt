@@ -8,6 +8,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillT
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.give
 import kr.kro.minestar.utility.location.offset
 import kr.kro.minestar.utility.particle.ParticleData
 import org.bukkit.Bukkit
@@ -59,7 +60,7 @@ object ParalysisGasGrenade : ActiveSkill(), Grenade {
                 if (player.gameMode != GameMode.ADVENTURE) continue
                 val data = worldData.getPlayerData(player) ?: continue
                 if (data.creature is Slayer) continue
-                player.addPotionEffect(PotionEffectType.SLOW.effect(1, 2))
+                PotionEffectType.SLOW.effect(1, 2).give(player)
             }
         }
 

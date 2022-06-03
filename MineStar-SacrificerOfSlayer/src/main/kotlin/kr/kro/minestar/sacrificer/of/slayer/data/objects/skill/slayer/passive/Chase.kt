@@ -5,6 +5,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passiv
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.give
 import kr.kro.minestar.utility.location.offset
 import org.bukkit.GameMode
 import org.bukkit.Material
@@ -31,7 +32,7 @@ object Chase : TickPassiveSkill() {
             if (offsetLocation.block.type != Material.AIR) break
             val players = offsetLocation.getNearbyPlayers(0.0)
             if (players.toTypedArray().isNotEmpty()) for (target in players) if (target != player) if (target.gameMode != GameMode.SPECTATOR) {
-                player.addPotionEffect(PotionEffectType.SPEED.effect(2, 0))
+                PotionEffectType.SPEED.effect(2, 0).give(player)
                 break
             }
         }

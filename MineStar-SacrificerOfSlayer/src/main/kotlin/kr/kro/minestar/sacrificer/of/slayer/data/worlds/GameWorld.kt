@@ -4,8 +4,9 @@ import kr.kro.minestar.sacrificer.of.slayer.Main.Companion.pl
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Sacrificer
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.creature.Slayer
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
-import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
 import kr.kro.minestar.sacrificer.of.slayer.functions.SoundClass
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.give
 import kr.kro.minestar.sacrificer.of.slayer.functions.WorldClass
 import kr.kro.minestar.utility.event.disable
 import kr.kro.minestar.utility.event.enable
@@ -50,7 +51,7 @@ class GameWorld(world: World, private val worldName: String) : WorldData(world) 
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c${WorldClass.readUnicode(worldName).removeUnderBar()}", 5, 60, 5, 20))
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c30초 후 각자의 역할이 지정됩니다", 5, 40, 5, 20))
         var countDown = 3
-        scheduler.addRun(RunNow { for (player in worldPlayers()) player.addPotionEffect(PotionEffectType.SPEED.effect(countDown, 2)) })
+        scheduler.addRun(RunNow { for (player in worldPlayers()) PotionEffectType.SPEED.effect(countDown, 2).give(player) })
         scheduler.addRun(RunTitle(worldPlayers(), " ", "§c$countDown", 5, 16, 0, -1))
         while (countDown > 1) {
             --countDown

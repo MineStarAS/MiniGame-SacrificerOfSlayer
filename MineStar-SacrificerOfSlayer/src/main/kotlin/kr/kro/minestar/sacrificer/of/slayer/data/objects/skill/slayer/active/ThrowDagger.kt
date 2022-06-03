@@ -6,6 +6,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.active
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.give
 import kr.kro.minestar.utility.location.look
 import kr.kro.minestar.utility.location.offset
 import kr.kro.minestar.utility.scheduler.Scheduler
@@ -46,7 +47,7 @@ object ThrowDagger : ActiveSkill() {
                     if (targets.toTypedArray().isNotEmpty())
                         for (target in targets) if (target != player)
                             if (target.gameMode != GameMode.SPECTATOR) {
-                                target.addPotionEffect(PotionEffectType.POISON.effect(5, 1))
+                                PotionEffectType.POISON.effect(5, 1).give(target)
                                 break
                             }
                 }

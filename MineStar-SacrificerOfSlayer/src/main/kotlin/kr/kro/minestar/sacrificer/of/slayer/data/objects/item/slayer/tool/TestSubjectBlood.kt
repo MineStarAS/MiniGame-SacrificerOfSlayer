@@ -3,6 +3,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.slayer.tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.tool.Tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillType
 import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.give
 import org.bukkit.Material
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.potion.PotionEffectType
@@ -20,8 +21,8 @@ object TestSubjectBlood : Tool() {
 
     override fun used(e: PlayerInteractEvent): Boolean {
         val player = e.player
-        player.addPotionEffect(PotionEffectType.SPEED.effect(15, 2))
-        player.addPotionEffect(PotionEffectType.JUMP.effect(15, 2))
+        PotionEffectType.SPEED.effect(15, 2).give(player)
+        PotionEffectType.JUMP.effect(15, 2).give(player)
         return true
     }
 }

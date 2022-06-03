@@ -5,6 +5,7 @@ import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.passiv
 import kr.kro.minestar.sacrificer.of.slayer.data.player.PlayerData
 import kr.kro.minestar.sacrificer.of.slayer.data.worlds.WorldData
 import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.effect
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass.give
 import org.bukkit.event.Event
 import org.bukkit.potion.PotionEffectType
 
@@ -28,7 +29,7 @@ object Hide : TickPassiveSkill() {
                 if (location.clone().add(0.0, 1.0, 1.0).block.type.isSolid) ++count
             if (location.clone().add(0.0, 0.0, -1.0).block.type.isSolid)
                 if (location.clone().add(0.0, 1.0, -1.0).block.type.isSolid) ++count
-            if (count >= 2) player.addPotionEffect(PotionEffectType.INVISIBILITY.effect(-2, 0))
+            if (count >= 2) PotionEffectType.INVISIBILITY.effect(0.1, 0).give(player)
         }
     }
 }
