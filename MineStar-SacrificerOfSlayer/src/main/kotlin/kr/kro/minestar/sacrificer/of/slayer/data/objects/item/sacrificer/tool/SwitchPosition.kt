@@ -2,6 +2,7 @@ package kr.kro.minestar.sacrificer.of.slayer.data.objects.item.sacrificer.tool
 
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.item.tool.Tool
 import kr.kro.minestar.sacrificer.of.slayer.data.objects.interfaces.skill.SkillType
+import kr.kro.minestar.sacrificer.of.slayer.functions.UtilityClass
 import kr.kro.minestar.utility.location.offset
 import kr.kro.minestar.utility.sound.PlaySound
 import org.bukkit.GameMode
@@ -25,29 +26,17 @@ object SwitchPosition : Tool(), Listener {
 
 
     override fun used(e: PlayerInteractEvent): Boolean {
-        if (e.action != Action.RIGHT_CLICK_AIR) return true
+        if (e.action != Action.RIGHT_CLICK_AIR) return false
         val player = e.player
-        var distance = 0.0
-        val location = player.eyeLocation
-        while (true) {
-            val offsetLocation = location.clone().offset(distance)
-            if (distance > 30) break
-            distance += 0.1
-            if (offsetLocation.block.type != Material.AIR) break
-            val players = offsetLocation.getNearbyPlayers(0.0)
-            if (players.toTypedArray().isNotEmpty())
-                for (target in players) if (target != player)
-                    if (target.gameMode != GameMode.SPECTATOR) {
-                        val loc1 = player.location
-                        val loc2 = target.location
-                        target.teleport(loc1)
-                        player.teleport(loc2)
-                        teleportSound.play(target.location)
-                        teleportSound.play(player.location)
-                        return true
-                    }
-        }
-        return false
+        val target = UtilityClass.aimTargeting(e.player, 30.0) ?: return false
+
+        val loc1 = player.location
+        val loc2 = target.location
+        target.teleport(loc1)
+        player.teleport(loc2)
+        teleportSound.play(target.location)
+        teleportSound.play(player.location)
+        return true
     }
 
     private val teleportSound = PlaySound().apply {

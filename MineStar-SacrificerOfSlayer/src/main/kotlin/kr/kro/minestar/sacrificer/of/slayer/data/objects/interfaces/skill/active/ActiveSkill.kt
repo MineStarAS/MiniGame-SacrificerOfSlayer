@@ -11,11 +11,10 @@ abstract class ActiveSkill : Skill() {
     abstract val startCoolTime: Int
 
     fun useActiveSkill(playerData: PlayerData, worldData: WorldData) {
-        playerData.resetActiveCoolTime(coolTime)
-        activeEffect(playerData, worldData)
+        if (activeEffect(playerData, worldData)) playerData.resetActiveCoolTime(coolTime)
     }
 
-    protected abstract fun activeEffect(playerData: PlayerData, worldData: WorldData)
+    protected abstract fun activeEffect(playerData: PlayerData, worldData: WorldData): Boolean
 
     fun getItem(): ItemStack {
         val item = ItemStack(Material.IRON_INGOT)

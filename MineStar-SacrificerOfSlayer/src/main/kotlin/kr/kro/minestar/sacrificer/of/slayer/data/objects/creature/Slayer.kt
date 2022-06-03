@@ -37,17 +37,17 @@ enum class Slayer : Creature {
         60
     ),
     SHADOW(
-        "그림자", DangerousSyringe, ImpactGrenade, BangBangBomb, TestSubjectBlood,
+        "그림자", DangerousSyringe, ImpactGrenade, BangBangBomb,
         70
     ),
     ;
 
-    val maxHealth: Int
     override val displayName: String
     override val weapon: Weapon
     override val activeSkill: ActiveSkill
     override val passiveSkill: PassiveSkill
     override val tool: Tool?
+    val maxHealth: Int
 
     constructor(
         displayName: String, weapon: Weapon, activeSkill: ActiveSkill, passiveSkill: PassiveSkill,
